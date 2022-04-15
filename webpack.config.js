@@ -1,22 +1,36 @@
-const path = require('path');
+
+const path = require( 'path' );
 
 module.exports = {
-  entry: path.resolve(__dirname, 'src'),
 
-  output: {
-    filename: 'summernote-header.min.js',
-    publicPath: 'dist/',
-  },
+    // bundling mode
+    mode: 'production',
 
-  resolve: {
-    alias: {
-        '@': path.resolve(__dirname, 'src/')
+    // entry files
+    entry: './src/index.ts',
+
+    // output bundles (location)
+    output: {
+        path: path.resolve( __dirname, 'dist' ),
+        filename: 'summernote-header.min.js',
+    },
+
+    // file resolutions
+    resolve: {
+        extensions: [ '.tsx', '.ts', '.js' ],
+        alias: {
+            '@': path.resolve(__dirname, 'src/')
+        }
+    },
+
+    // loaders
+    module: {
+        rules: [
+            {
+                test: /\.tsx?/,
+                use: 'ts-loader',
+                exclude: /node_modules/,
+            }
+        ]
     }
-  },
-
-  module: {
-    rules: [{ test: /\.js?$/, loader: 'babel-loader', exclude: /node_modules/ }],
-  },
-
-  devtool: 'source-map'
 };

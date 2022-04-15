@@ -1,28 +1,28 @@
+import Options from './SummernoteHeaderOptionsInterface'
 
-export default class SummernoteGallery {
-    constructor(options) {
+export default class SummernoteHeader {
+    public options: Options;
+    private context: any;
+
+    constructor(options: Options) {
         this.options = $.extend({
             name: 'summernoteHeader',
             buttonLabel: '<i class="fa fa-file-header"></i> SN Header',
             tooltip: 'summernote header'
         }, options);
-
-        this.plugin_default_options = {}
     }
 
-    init(context) {
+    init(context: any) {
         this.context = context;
     }
 
     createButton() {
-        var _this = this;
-
-        var button = $.summernote.ui.button({
+        let button = ($ as any).summernote.ui.button({
             className: 'w-100',
             contents: this.options.buttonLabel,
             tooltip: this.options.tooltip,
-            click: function() {
-                _this.addHeaderToEditor();
+            click: () => {
+                this.addHeaderToEditor();
             }
         });
 

@@ -1,16 +1,19 @@
 import SummernoteHeader from './SummernoteHeader'
+import Options from './SummernoteHeaderOptionsInterface'
 
 export default class GalleryPlugin {
-    constructor(options) {
+    private summernote_header: SummernoteHeader;
+    
+    constructor(options?: Options) {
         this.summernote_header = new SummernoteHeader(options);
     }
 
     getPlugin() {
-        let plugin = {};
+        let plugin:any = {};
         let _this = this;
         let options = this.summernote_header.options
 
-        plugin[options.name] = function(context) {
+        plugin[options.name] = function(context: any) {
 
             let sgOptions = context.options[options.name] || {}
             let buttonLabel = sgOptions.buttonLabel || _this.summernote_header.options.buttonLabel
@@ -21,7 +24,7 @@ export default class GalleryPlugin {
             context.memo('button.' + options.name, _this.createButton());
 
             this.events = {
-                'summernote.keyup': function(we, e)
+                'summernote.keyup': function(we: any, e: any)
                 {
 
                 }

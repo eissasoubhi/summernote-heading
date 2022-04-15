@@ -1,0 +1,35 @@
+{
+  "name": "summernote-header",
+  "version": "1.0.0",
+  "description": "summernote header module, adds a customized header component to summernote.",
+  "main": "dist/summernote-header.min.js",
+  "keywords": [
+    "summernote header",
+    "summernote title",
+    "summernote h1",
+    "summernote h2",
+    "summernote module",
+    "summernote plugin"
+  ],
+  "homepage": "",
+  "bugs": "",
+  "repository": "",
+  "devDependencies": {
+    "@babel/cli": "^7.10.1",
+    "@babel/core": "^7.10.2",
+    "@babel/plugin-proposal-class-properties": "^7.10.1",
+    "@babel/plugin-proposal-private-methods": "^7.10.1",
+    "@babel/preset-env": "^7.10.2",
+    "babel-loader": "^8.1.0",
+    "http-serve": "^1.0.1",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11"
+  },
+  "scripts": {
+    "start": "node node_modules/http-serve/bin/http-serve -a 127.0.0.1 -p 9091",
+    "build": "webpack --mode=production",
+    "dev": "webpack --mode development --watch"
+  },
+  "author": "Eissa Soubhi <eissa.soubhi@gmail.com> (http://eissa-soubhi.com/)",
+  "license": "MIT"
+}

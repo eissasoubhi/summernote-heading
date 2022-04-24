@@ -1,0 +1,7 @@
+export default interface ModalOptionsInterface {
+    title: string
+
+    closeText: string,
+
+    saveText: string,
+}

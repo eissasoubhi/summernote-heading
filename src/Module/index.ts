@@ -1,44 +1,40 @@
 import SummernoteHeader from './SummernoteHeader'
-import Options from './SummernoteHeaderOptionsInterface'
 
 export default class GalleryPlugin {
-    private summernote_header: SummernoteHeader;
+    private summernoteHeader: SummernoteHeader;
+    private readonly name: string;
     
-    constructor(options?: Options) {
-        this.summernote_header = new SummernoteHeader(options);
+    constructor(name: string) {
+        this.name = name
+        this.summernoteHeader = new SummernoteHeader(this.name);
     }
 
-    getPlugin() {
-        let plugin:any = {};
+    getPlugin(): object {
+        let plugin: any = {};
         let _this = this;
-        let options = this.summernote_header.options
 
-        plugin[options.name] = function(context: any) {
+        plugin[this.name] = function(context: any) {
 
-            let sgOptions = context.options[options.name] || {}
-            let buttonLabel = sgOptions.buttonLabel || _this.summernote_header.options.buttonLabel
+            _this.summernoteHeader.init(context);
 
-            _this.summernote_header.options.buttonLabel = buttonLabel
-
-            // add gallery button
-            context.memo('button.' + options.name, _this.createButton());
+            context.memo('button.' + _this.name, _this.createButton());
 
             this.events = {
                 'summernote.keyup': function(we: any, e: any)
                 {
-
+                    _this.summernoteHeader.editor.saveLastFocusedElement();
                 }
             };
 
             this.initialize = function() {
-                _this.summernote_header.init(context);
+
             };
         }
 
         return plugin;
     }
 
-    createButton() {
-        return this.summernote_header.createButton();
+    createButton(): JQueryStatic {
+        return this.summernoteHeader.createButton();
     }
 }

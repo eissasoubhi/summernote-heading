@@ -18,8 +18,12 @@ export default class Editor implements EventsAwareInterface{
         this.attachEvents()
     }
 
-    insert(node: HTMLElement) {
+    insertNode(node: HTMLElement) {
         this.context.invoke('editor.insertNode', node);
+    }
+
+    insertHtml(html: string) {
+        this.context.invoke('editor.pasteHTML', html);
     }
 
     attachEvents() {

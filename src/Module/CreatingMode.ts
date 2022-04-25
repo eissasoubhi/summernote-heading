@@ -5,7 +5,10 @@ import ModalModeInterface from './Interfaces/Modal/ModalModeInterface'
 export default class CreatingMode extends ModalModeAbstract implements ModalModeInterface {
 
     save(data: HeaderDataInterface): void {
-        this.editor.insert(this.createBrick(data))
+        const newLine = '<p><br></p>'
+
+        this.editor.insertNode(this.createBrick(data))
+        this.editor.insertHtml(newLine)
     }
 
     getModalLoadData(): HeaderDataInterface {

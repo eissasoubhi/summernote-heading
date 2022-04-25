@@ -3,20 +3,20 @@ import EventManager from "./EventManager";
 import RenderModalTemplate from './templates/modalTemplate'
 import ModalInterface from './Interfaces/Modal/ModalInterface'
 import EventsAwareInterface from './Interfaces/EventsAwareInterface'
-import HeaderDataInterface from "./Interfaces/HeaderDataInterface";
+import HeadingDataInterface from "./Interfaces/HeadingDataInterface";
 import ModalModeInterface from './Interfaces/Modal/ModalModeInterface'
-import HeaderModalOptionsInterface from './Interfaces/HeaderModalOptionsInterface'
+import HeadingModalOptionsInterface from './Interfaces/HeadingModalOptionsInterface'
 
-export default class HeaderModal implements ModalInterface, EventsAwareInterface{
+export default class HeadingModal implements ModalInterface, EventsAwareInterface{
     private $modal: JQuery;
     private eventManager: EventsAwareInterface;
-    private readonly options: HeaderModalOptionsInterface;
+    private readonly options: HeadingModalOptionsInterface;
     private mode: ModalModeInterface;
 
-    constructor(mode: ModalModeInterface, options: HeaderModalOptionsInterface) {
+    constructor(mode: ModalModeInterface, options: HeadingModalOptionsInterface) {
         this.options = $.extend({
             // modal title
-            title: 'summernote header title',
+            title: 'summernote heading title',
 
             // close button text
             closeText: 'Close',
@@ -25,7 +25,7 @@ export default class HeaderModal implements ModalInterface, EventsAwareInterface
             saveText: 'Save',
 
             // title input label text
-            headerLabel: 'Header title'
+            headingLabel: 'Heading title'
         }, options);
 
         this.mode = mode;
@@ -61,10 +61,10 @@ export default class HeaderModal implements ModalInterface, EventsAwareInterface
         (this.$modal as any).modal('hide');
     }
 
-    getData(): HeaderDataInterface {
+    getData(): HeadingDataInterface {
         return {
             brickIdentifier: Date.now().toString(),
-            title: this.getBody().find('#snb-header-title').val().toString(),
+            title: this.getBody().find('#snb-heading-title').val().toString(),
         }
     }
 
@@ -72,7 +72,7 @@ export default class HeaderModal implements ModalInterface, EventsAwareInterface
         return this.$modal.find('.modal-body')
     }
 
-    createModal(data: HeaderDataInterface): JQuery {
+    createModal(data: HeadingDataInterface): JQuery {
         const modalJSX = RenderModalTemplate(data, this.options)
         return $( Utils.JSXElementToHTMLElement(modalJSX) ).hide();
     }

@@ -1,12 +1,12 @@
-import SummernoteHeader from './SummernoteHeader'
+import SummernoteHeading from './SummernoteHeading'
 
 export default class GalleryPlugin {
-    private summernoteHeader: SummernoteHeader;
+    private summernoteHeading: SummernoteHeading;
     private readonly name: string;
     
     constructor(name: string) {
         this.name = name
-        this.summernoteHeader = new SummernoteHeader(this.name);
+        this.summernoteHeading = new SummernoteHeading(this.name);
     }
 
     getPlugin(): object {
@@ -15,14 +15,14 @@ export default class GalleryPlugin {
 
         plugin[this.name] = function(context: any) {
 
-            _this.summernoteHeader.init(context);
+            _this.summernoteHeading.init(context);
 
             context.memo('button.' + _this.name, _this.createButton());
 
             this.events = {
                 'summernote.keyup': function(we: any, e: any)
                 {
-                    _this.summernoteHeader.editor.saveLastFocusedElement();
+                    _this.summernoteHeading.editor.saveLastFocusedElement();
                 }
             };
 
@@ -35,6 +35,6 @@ export default class GalleryPlugin {
     }
 
     createButton(): JQueryStatic {
-        return this.summernoteHeader.createButton();
+        return this.summernoteHeading.createButton();
     }
 }

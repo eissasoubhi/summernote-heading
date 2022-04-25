@@ -1,13 +1,13 @@
 import Editor from "./Editor";
 import EditingMode from "./EditingMode";
-import HeaderModal from './HeaderModal'
+import HeadingModal from './HeadingModal'
 import CreatingMode from "./CreatingMode";
 import SummernoteBrickInterface from './Interfaces/SummernoteBrickInterface'
 import SummernotePluginInterface from './Interfaces/Plugin/SummernotePluginInterface'
 import ModalModeInterface from "./Interfaces/Modal/ModalModeInterface";
 import SummernotePluginOptionsInterface from './Interfaces/Plugin/SummernotePluginOptionsInterface'
 
-export default class SummernoteHeader implements SummernoteBrickInterface, SummernotePluginInterface {
+export default class SummernoteHeading implements SummernoteBrickInterface, SummernotePluginInterface {
     private pluginOptions: SummernotePluginOptionsInterface;
     private readonly pluginName: string;
     public editor: Editor;
@@ -32,7 +32,7 @@ export default class SummernoteHeader implements SummernoteBrickInterface, Summe
 
 
     openModal(mode: ModalModeInterface) {
-        let modal = new HeaderModal(mode, this.pluginOptions.modal)
+        let modal = new HeadingModal(mode, this.pluginOptions.modal)
 
         modal.on('beforeSave',  () => {
             this.editor.recoverEditorFocus();

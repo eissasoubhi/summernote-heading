@@ -2,7 +2,7 @@ import Utils from "./Utils";
 import Editor from "./Editor";
 import EditableBrick from "./EditableBrick";
 import renderBrick from "./templates/brickTemplate";
-import HeaderDataInterface from "./Interfaces/HeaderDataInterface";
+import HeadingDataInterface from "./Interfaces/HeadingDataInterface";
 
 export default abstract class ModalModeAbstract {
 
@@ -12,7 +12,7 @@ export default abstract class ModalModeAbstract {
         this.editor = editor
     }
 
-    createBrick(data: HeaderDataInterface): HTMLElement {
+    createBrick(data: HeadingDataInterface): HTMLElement {
         const newBrick = Utils.JSXElementToHTMLElement( renderBrick(data) )
 
         const editableBrick = new EditableBrick(newBrick, {

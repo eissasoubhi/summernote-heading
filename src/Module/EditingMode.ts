@@ -1,7 +1,7 @@
 import Editor from "./Editor";
 import EditableBrick from "./EditableBrick";
 import ModalModeAbstract from "./ModalModeAbstract";
-import HeaderDataInterface from "./Interfaces/HeaderDataInterface";
+import HeadingDataInterface from "./Interfaces/HeadingDataInterface";
 import ModalModeInterface from './Interfaces/Modal/ModalModeInterface'
 
 export default class EditingMode extends ModalModeAbstract implements ModalModeInterface {
@@ -13,11 +13,11 @@ export default class EditingMode extends ModalModeAbstract implements ModalModeI
         this.editingBrick = editingBrick
     }
 
-    save(data: HeaderDataInterface): void {
+    save(data: HeadingDataInterface): void {
         $(this.editingBrick).replaceWith(this.createBrick(data))
     }
 
-    getModalLoadData(): HeaderDataInterface {
+    getModalLoadData(): HeadingDataInterface {
 
         let editableBrick = new EditableBrick(this.editingBrick, {
             editableBrickClass: this.editor.editableBrickClass,

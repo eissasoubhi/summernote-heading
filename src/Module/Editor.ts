@@ -10,7 +10,7 @@ export default class Editor implements EventsAwareInterface{
 
     constructor(context: any) {
         this.context = context
-        this.editableBrickClass = 'snb-header-brick';
+        this.editableBrickClass = 'snb-heading-brick';
         this.editable = context.layoutInfo.editable
         this.snEditor = context.layoutInfo.editor
         this.eventManager = new EventManager()

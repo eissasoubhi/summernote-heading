@@ -1,17 +1,17 @@
 import ModalModeAbstract from "./ModalModeAbstract";
-import HeaderDataInterface from "./Interfaces/HeaderDataInterface";
+import HeadingDataInterface from "./Interfaces/HeadingDataInterface";
 import ModalModeInterface from './Interfaces/Modal/ModalModeInterface'
 
 export default class CreatingMode extends ModalModeAbstract implements ModalModeInterface {
 
-    save(data: HeaderDataInterface): void {
+    save(data: HeadingDataInterface): void {
         const newLine = '<p><br></p>'
 
         this.editor.insertNode(this.createBrick(data))
         this.editor.insertHtml(newLine)
     }
 
-    getModalLoadData(): HeaderDataInterface {
+    getModalLoadData(): HeadingDataInterface {
         return {
             brickIdentifier: Date.now().toString(),
             title: '',

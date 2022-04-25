@@ -12,7 +12,7 @@ module.exports = {
     // output bundles (location)
     output: {
         path: path.resolve( __dirname, 'dist' ),
-        filename: 'summernote-header.min.js',
+        filename: 'summernote-heading.min.js',
     },
 
     // file resolutions

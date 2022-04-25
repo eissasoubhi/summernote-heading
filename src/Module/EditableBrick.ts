@@ -1,6 +1,6 @@
 import Utils from "./Utils";
 import RenderEditableWrap from "./templates/editableWrapTemplate";
-import HeaderDataInterface from "./Interfaces/HeaderDataInterface";
+import HeadingDataInterface from "./Interfaces/HeadingDataInterface";
 import EditableBrickOptionsInterface from "./Interfaces/Editable/EditableBrickOptionsInterface";
 
 export default class EditableBrick {
@@ -27,7 +27,7 @@ export default class EditableBrick {
         return editableBrick
     }
 
-    getBrickData(): HeaderDataInterface {
+    getBrickData(): HeadingDataInterface {
         return $(this.brick).find('[data-brickdata]').data('brickdata')
     }
 }

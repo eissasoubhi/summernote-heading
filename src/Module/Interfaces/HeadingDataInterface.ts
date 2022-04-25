@@ -1,4 +1,4 @@
-export default interface HeaderDataInterface {
+export default interface HeadingDataInterface {
     brickIdentifier: string,
 
     title: string,

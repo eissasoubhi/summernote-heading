@@ -1,8 +1,8 @@
 import * as React from "react"; // for JSX rendering
-import HeaderDataInterface from "../Interfaces/HeaderDataInterface";
-import HeaderModalOptionsInterface from '../Interfaces/HeaderModalOptionsInterface'
+import HeadingDataInterface from "../Interfaces/HeadingDataInterface";
+import HeadingModalOptionsInterface from '../Interfaces/HeadingModalOptionsInterface'
 
-export default (data: HeaderDataInterface, options: HeaderModalOptionsInterface) => {
+export default (data: HeadingDataInterface, options: HeadingModalOptionsInterface) => {
 
     const bootstrapVersion = parseInt(($.fn as any).modal.Constructor.VERSION);
     const closeButton = <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -20,8 +20,8 @@ export default (data: HeaderDataInterface, options: HeaderModalOptionsInterface)
                         <div className="row">
                             <div className="col-md-12">
                                 <div className="form-group">
-                                    <label htmlFor="snb-header-title">{options.headerLabel}</label>
-                                    <input type="text" className="form-control" id="snb-header-title" defaultValue={data.title}/>
+                                    <label htmlFor="snb-heading-title">{options.headingLabel}</label>
+                                    <input type="text" className="form-control" id="snb-heading-title" defaultValue={data.title}/>
                                 </div>
                             </div>
                         </div>

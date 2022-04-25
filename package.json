@@ -1,10 +1,10 @@
 {
-  "name": "summernote-header",
+  "name": "summernote-heading",
   "version": "1.0.0",
-  "description": "summernote header module, adds a customized header component to summernote.",
-  "main": "dist/summernote-header.min.js",
+  "description": "summernote heading module, adds a customized heading component to summernote.",
+  "main": "",
   "keywords": [
-    "summernote header",
+    "summernote heading",
     "summernote title",
     "summernote h1",
     "summernote h2",

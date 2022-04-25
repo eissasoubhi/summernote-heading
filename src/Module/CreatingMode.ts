@@ -15,6 +15,7 @@ export default class CreatingMode extends ModalModeAbstract implements ModalMode
         return {
             brickIdentifier: Date.now().toString(),
             title: '',
+            subtitle: '',
         }
     }
 }

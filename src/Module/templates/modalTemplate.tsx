@@ -20,8 +20,14 @@ export default (data: HeadingDataInterface, options: HeadingModalOptionsInterfac
                         <div className="row">
                             <div className="col-md-12">
                                 <div className="form-group">
-                                    <label htmlFor="snb-heading-title">{options.headingLabel}</label>
+                                    <label htmlFor="snb-heading-title">{options.titleLabel}</label>
                                     <input type="text" className="form-control" id="snb-heading-title" defaultValue={data.title}/>
+                                </div>
+                            </div>
+                            <div className="col-md-12">
+                                <div className="form-group">
+                                    <label htmlFor="snb-heading-subtitle">{options.subtitleLabel}</label>
+                                    <input type="text" className="form-control" id="snb-heading-subtitle" defaultValue={data.subtitle}/>
                                 </div>
                             </div>
                         </div>

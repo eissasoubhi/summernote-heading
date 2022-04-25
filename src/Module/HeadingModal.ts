@@ -14,7 +14,7 @@ export default class HeadingModal implements ModalInterface, EventsAwareInterfac
     private mode: ModalModeInterface;
 
     constructor(mode: ModalModeInterface, options: HeadingModalOptionsInterface) {
-        this.options = $.extend({
+        const defaultOptions: HeadingModalOptionsInterface = {
             // modal title
             title: 'summernote heading title',
 
@@ -25,8 +25,12 @@ export default class HeadingModal implements ModalInterface, EventsAwareInterfac
             saveText: 'Save',
 
             // title input label text
-            headingLabel: 'Heading title'
-        }, options);
+            titleLabel: 'Heading title',
+
+            subtitleLabel: 'Heading subtitle',
+        }
+
+        this.options = $.extend(defaultOptions, options);
 
         this.mode = mode;
 
@@ -65,6 +69,7 @@ export default class HeadingModal implements ModalInterface, EventsAwareInterfac
         return {
             brickIdentifier: Date.now().toString(),
             title: this.getBody().find('#snb-heading-title').val().toString(),
+            subtitle: this.getBody().find('#snb-heading-subtitle').val().toString(),
         }
     }
 

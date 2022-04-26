@@ -1,8 +1,8 @@
-import Editor from "./Editor";
-import EditableBrick from "./EditableBrick";
-import ModalModeAbstract from "./ModalModeAbstract";
-import HeadingDataInterface from "./Interfaces/HeadingDataInterface";
-import ModalModeInterface from './Interfaces/Modal/ModalModeInterface'
+import Editor from "../Editor";
+import EditableBrick from "../EditableBrick";
+import ModalModeAbstract from "../ModalModeAbstract";
+import HeadingDataInterface from "../Interfaces/HeadingDataInterface";
+import ModalModeInterface from '../Interfaces/Modal/ModalModeInterface'
 
 export default class EditingMode extends ModalModeAbstract implements ModalModeInterface {
 

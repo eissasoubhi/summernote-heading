@@ -1,8 +1,8 @@
-import Utils from "./Utils";
-import RenderBrickStyle from './styles/brickStyle'
-import ModalModeAbstract from "./ModalModeAbstract";
-import HeadingDataInterface from "./Interfaces/HeadingDataInterface";
-import ModalModeInterface from './Interfaces/Modal/ModalModeInterface'
+import Utils from "../Utils";
+import RenderBrickStyle from '../styles/brickStyle'
+import ModalModeAbstract from "../ModalModeAbstract";
+import HeadingDataInterface from "../Interfaces/HeadingDataInterface";
+import ModalModeInterface from '../Interfaces/Modal/ModalModeInterface'
 
 export default class CreatingMode extends ModalModeAbstract implements ModalModeInterface {
 

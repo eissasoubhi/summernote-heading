@@ -3,7 +3,7 @@ import EditableWrapOptionsInterface from "../Interfaces/Editable/EditableWrapOpt
 
 export default (options: EditableWrapOptionsInterface) => {
     return <div contentEditable={false} className={`snb-editable-brick-wrap ${options.editableBrickClass}`}>
-        <div className="snb-brick-actions">
+        <div className="snb-brick-actions" style={{display: 'none'}}>
             <button type="button" className="snb-remove btn btn-danger">
                 <i className="fa fa-times"></i>
             </button>

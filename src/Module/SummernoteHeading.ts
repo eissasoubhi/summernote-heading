@@ -6,6 +6,7 @@ import SummernoteBrickInterface from './Interfaces/SummernoteBrickInterface'
 import SummernotePluginInterface from './Interfaces/Plugin/SummernotePluginInterface'
 import ModalModeInterface from "./Interfaces/Modal/ModalModeInterface";
 import SummernotePluginOptionsInterface from './Interfaces/Plugin/SummernotePluginOptionsInterface'
+import EditableBrick from "./EditableBrick";
 
 export default class SummernoteHeading implements SummernoteBrickInterface, SummernotePluginInterface {
     private pluginOptions: SummernotePluginOptionsInterface;
@@ -27,6 +28,16 @@ export default class SummernoteHeading implements SummernoteBrickInterface, Summ
     attachEditorEvents() {
         this.editor.on('brick-editing', (brick: HTMLElement) => {
             this.openModal(new EditingMode(brick, this.editor) )
+        })
+
+        this.editor.on('brick-removed', (brick: HTMLElement) => {
+            const editableBrick = new EditableBrick(brick, {
+                editableBrickClass: this.editor.editableBrickClass,
+            })
+
+            const blankLineIdentifier = editableBrick.getBrickData().brickIdentifier
+
+            this.editor.removeBlankLine(blankLineIdentifier)
         })
     }
 

@@ -9,7 +9,7 @@ export default (data: HeadingDataInterface, options: HeadingModalOptionsInterfac
     const modalTitle = <h4 className="modal-title">{options.title}</h4>
 
     return (
-        <div className="modal summernote-gallery fade" tabIndex={-1} role="dialog">
+        <div className="modal fade" tabIndex={-1} role="dialog">
             <div className="modal-lg modal-dialog ">
                 <div className="modal-content">
                     <div className="modal-header">
@@ -36,6 +36,9 @@ export default (data: HeadingDataInterface, options: HeadingModalOptionsInterfac
                         <button type="button" id="close" className="btn btn-default"
                                 data-dismiss="modal">{options.closeText}</button>
                         <button type="button" id="save" className="btn btn-primary">{options.saveText}</button>
+                    </div>
+                    <div className={options.messageContainerClass}>
+                        {/*  messages will be added here  */}
                     </div>
                 </div>
             </div>

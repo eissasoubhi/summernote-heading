@@ -6,6 +6,8 @@ import EventsAwareInterface from './Interfaces/EventsAwareInterface'
 import HeadingDataInterface from "./Interfaces/HeadingDataInterface";
 import ModalModeInterface from './Interfaces/Modal/ModalModeInterface'
 import HeadingModalOptionsInterface from './Interfaces/HeadingModalOptionsInterface'
+import DataValidator from "./DataValidator";
+import ErrorMessage from "./Messages/ErrorMessage";
 
 export default class HeadingModal implements ModalInterface, EventsAwareInterface{
     private $modal: JQuery;
@@ -27,7 +29,11 @@ export default class HeadingModal implements ModalInterface, EventsAwareInterfac
             // title input label text
             titleLabel: 'Heading title',
 
+            // title input label text
             subtitleLabel: 'Heading subtitle',
+
+            // the html element class containing the modal messages
+            messageContainerClass: 'snb-modal-message'
         }
 
         this.options = $.extend(defaultOptions, options);
@@ -41,6 +47,15 @@ export default class HeadingModal implements ModalInterface, EventsAwareInterfac
         let _this = this;
 
         $modal.find("button#save").on('click',function(event) {
+
+            const validator = new DataValidator(_this.getData())
+
+            _this.clearMessages()
+
+            if (!validator.isValid()) {
+                _this.showErrors(validator.getErrors())
+                return
+            }
 
             _this.close()
 
@@ -77,6 +92,10 @@ export default class HeadingModal implements ModalInterface, EventsAwareInterfac
         return this.$modal.find('.modal-body')
     }
 
+    getMessagesContainer(): JQuery {
+        return this.$modal.find(`.${this.options.messageContainerClass}`)
+    }
+
     createModal(data: HeadingDataInterface): JQuery {
         const modalJSX = RenderModalTemplate(data, this.options)
         return $( Utils.JSXElementToHTMLElement(modalJSX) ).hide();
@@ -88,5 +107,19 @@ export default class HeadingModal implements ModalInterface, EventsAwareInterfac
 
     trigger(eventName: string, data: any = {}): EventsAwareInterface {
         return this.eventManager.trigger(eventName, data) ;
+    }
+
+    showErrors(errors: any): void {
+
+        for (const errorKey in errors) {
+            const message = new ErrorMessage(errors[errorKey])
+            const messageNode = message.getHtmlNode()
+
+            this.getMessagesContainer().append(messageNode)
+        }
+    }
+
+    clearMessages():void {
+        this.getMessagesContainer().html('')
     }
 }

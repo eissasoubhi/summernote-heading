@@ -4,4 +4,6 @@ export default interface ModalOptionsInterface {
     closeText: string,
 
     saveText: string,
+
+    messageContainerClass: string
 }

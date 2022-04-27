@@ -1,6 +1,6 @@
 import Editor from "../Editor";
 import EditableBrick from "../EditableBrick";
-import ModalModeAbstract from "../ModalModeAbstract";
+import ModalModeAbstract from "./ModalModeAbstract";
 import HeadingDataInterface from "../Interfaces/HeadingDataInterface";
 import ModalModeInterface from '../Interfaces/Modal/ModalModeInterface'
 

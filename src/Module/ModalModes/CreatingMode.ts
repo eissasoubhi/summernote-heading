@@ -1,32 +1,35 @@
 import Utils from "../Utils";
 import RenderBrickStyle from '../styles/brickStyle'
-import ModalModeAbstract from "../ModalModeAbstract";
+import ModalModeAbstract from "./ModalModeAbstract";
 import HeadingDataInterface from "../Interfaces/HeadingDataInterface";
 import ModalModeInterface from '../Interfaces/Modal/ModalModeInterface'
+import HeadingModalOptionsInterface from "../Interfaces/HeadingModalOptionsInterface";
 
 export default class CreatingMode extends ModalModeAbstract implements ModalModeInterface {
 
     save(data: HeadingDataInterface): void {
         if (!this.editor.hasStyle(this.editor.styleIdentifier)) {
-            this.editor.insertHtml(this.createStyle())
+            this.editor.insertHtml(this.createStyle(data))
         }
 
         this.editor.insertNode(this.createBrick(data))
         this.editor.insertHtml(this.createBlankLine(data))
     }
 
-    getModalLoadData(): HeadingDataInterface {
+    getModalLoadData(modalOptions: HeadingModalOptionsInterface): HeadingDataInterface {
         return {
-            brickIdentifier: Date.now().toString(),
+            brickIdentifier: `brick_${Date.now()}`,
             title: '',
             subtitle: '',
+            underlineColor: modalOptions.defaultUnderlineColor
         }
     }
 
-    createStyle(): string {
+    createStyle(data: HeadingDataInterface): string {
         let style = Utils.JSXElementToHTMLElement( RenderBrickStyle({
             styleIdentifier: this.editor.styleIdentifier,
-            snbBrickClass: this.editor.editableBrickClass
+            snbBrickClass: this.editor.editableBrickClass,
+            underlineColor: data.underlineColor
         }) )
 
         style =  $(style).wrap('<span contenteditable="false"></span>').parent()[0]

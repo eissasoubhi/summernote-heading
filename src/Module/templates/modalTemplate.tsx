@@ -20,14 +20,23 @@ export default (data: HeadingDataInterface, options: HeadingModalOptionsInterfac
                         <div className="row">
                             <div className="col-md-12">
                                 <div className="form-group">
-                                    <label htmlFor="snb-heading-title">{options.titleLabel}</label>
+                                    <label htmlFor="snb-heading-title">{options.titleLabel}</label>:
                                     <input type="text" className="form-control" id="snb-heading-title" defaultValue={data.title}/>
                                 </div>
                             </div>
                             <div className="col-md-12">
                                 <div className="form-group">
-                                    <label htmlFor="snb-heading-subtitle">{options.subtitleLabel}</label>
+                                    <label htmlFor="snb-heading-subtitle">{options.subtitleLabel}</label>:
                                     <input type="text" className="form-control" id="snb-heading-subtitle" defaultValue={data.subtitle}/>
+                                </div>
+                            </div>
+                        </div>
+                        <hr/>
+                        <div className="row">
+                            <div className="col-md-4">
+                                <div className="form-group">
+                                    <label htmlFor="snb-heading-underline-color">{options.underlineColorLabel}</label>:
+                                    <input type="color" style={{display: 'block'}} id="snb-heading-underline-color" defaultValue={data.underlineColor}/>
                                 </div>
                             </div>
                         </div>

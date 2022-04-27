@@ -36,7 +36,6 @@ export default (options: BrickStyleOptionsInterface) => {
                     width: 60px;
                     height: 2px;
                     content: "";
-                    background-color: #c50000;
                 }
                 
                 ${brickClass} h1 span {

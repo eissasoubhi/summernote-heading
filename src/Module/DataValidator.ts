@@ -1,4 +1,4 @@
-import validations from "./validations.json"
+import validations from "./config/validations.json"
 
 export default class DataValidator {
     private readonly data: any

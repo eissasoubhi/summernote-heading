@@ -41,7 +41,6 @@ export default class SummernoteHeading implements SummernoteBrickInterface, Summ
         })
     }
 
-
     openModal(mode: ModalModeInterface) {
         let modal = new HeadingModal(mode, this.pluginOptions.modal)
 

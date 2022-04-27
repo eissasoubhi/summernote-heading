@@ -3,5 +3,7 @@ export default interface HeadingDataInterface {
 
     title: string,
 
-    subtitle: string
+    subtitle: string,
+
+    underlineColor: string
 }

@@ -1,8 +1,8 @@
-import Utils from "./Utils";
-import Editor from "./Editor";
-import EditableBrick from "./EditableBrick";
-import RenderBrickTemplate from "./templates/brickTemplate";
-import HeadingDataInterface from "./Interfaces/HeadingDataInterface";
+import Utils from "../Utils";
+import Editor from "../Editor";
+import EditableBrick from "../EditableBrick";
+import RenderBrickTemplate from "../templates/brickTemplate";
+import HeadingDataInterface from "../Interfaces/HeadingDataInterface";
 
 export default abstract class ModalModeAbstract {
 

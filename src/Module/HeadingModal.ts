@@ -33,7 +33,13 @@ export default class HeadingModal implements ModalInterface, EventsAwareInterfac
             subtitleLabel: 'Heading subtitle',
 
             // the html element class containing the modal messages
-            messageContainerClass: 'snb-modal-message'
+            messageContainerClass: 'snb-modal-message',
+
+            // the default value of the underline color input
+            defaultUnderlineColor: '#c50000',
+
+            // the text of the label of the underline color input
+            underlineColorLabel: 'Underline color'
         }
 
         this.options = $.extend(defaultOptions, options);
@@ -69,7 +75,7 @@ export default class HeadingModal implements ModalInterface, EventsAwareInterfac
     }
 
     open() {
-        this.$modal = this.createModal(this.mode.getModalLoadData());
+        this.$modal = this.createModal(this.mode.getModalLoadData(this.options));
 
         this.attachEvents(this.$modal);
 
@@ -82,9 +88,10 @@ export default class HeadingModal implements ModalInterface, EventsAwareInterfac
 
     getData(): HeadingDataInterface {
         return {
-            brickIdentifier: Date.now().toString(),
+            brickIdentifier: `brick_${Date.now()}`,
             title: this.getBody().find('#snb-heading-title').val().toString(),
             subtitle: this.getBody().find('#snb-heading-subtitle').val().toString(),
+            underlineColor: this.getBody().find('#snb-heading-underline-color').val().toString()
         }
     }
 

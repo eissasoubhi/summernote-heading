@@ -6,5 +6,5 @@ export default interface SummernotePluginOptionsInterface {
 
     buttonLabel?: string,
 
-    tooltip?: string,
+    tooltip?: string
 }

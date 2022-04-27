@@ -1,10 +1,8 @@
-import validations from "./config/validations.json"
-
 export default class DataValidator {
     private readonly data: any
     private readonly validations: {[index: string]:any};
 
-    constructor(data: any) {
+    constructor(data: any, validations: any) {
         this.data = data
         this.validations = validations
     }

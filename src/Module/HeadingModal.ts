@@ -39,7 +39,13 @@ export default class HeadingModal implements ModalInterface, EventsAwareInterfac
             defaultUnderlineColor: '#c50000',
 
             // the text of the label of the underline color input
-            underlineColorLabel: 'Underline color'
+            underlineColorLabel: 'Underline color',
+
+            // modal inputs validations
+            validations: {
+                "title": ["required"],
+                "subtitle": ["required"]
+            }
         }
 
         this.options = $.extend(defaultOptions, options);
@@ -54,7 +60,7 @@ export default class HeadingModal implements ModalInterface, EventsAwareInterfac
 
         $modal.find("button#save").on('click',function(event) {
 
-            const validator = new DataValidator(_this.getData())
+            const validator = new DataValidator(_this.getData(), _this.options.validations)
 
             _this.clearMessages()
 

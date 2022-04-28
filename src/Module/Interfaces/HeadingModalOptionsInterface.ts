@@ -8,6 +8,4 @@ export default interface HeadingModalOptionsInterface extends ModalOptionsInterf
     underlineColorLabel: string
 
     defaultUnderlineColor: string
-
-    validations: any
 }

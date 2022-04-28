@@ -1,9 +1,11 @@
 export default interface ModalOptionsInterface {
     title: string
 
-    closeText: string,
+    closeText: string
 
-    saveText: string,
+    saveText: string
 
     messageContainerClass: string
+
+    validations: any
 }

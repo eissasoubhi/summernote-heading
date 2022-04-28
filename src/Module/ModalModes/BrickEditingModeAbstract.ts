@@ -1,10 +1,10 @@
 import Editor from "../Editor";
 import EditableBrick from "../EditableBrick";
 import ModalModeAbstract from "./ModalModeAbstract";
-import HeadingDataInterface from "../Interfaces/HeadingDataInterface";
-import ModalModeInterface from '../Interfaces/Modal/ModalModeInterface'
+import ModalModeInterface from '../Interfaces/Modal/ModalModeInterface';
+import DataInterface from "../Interfaces/DataInterface";
 
-export default class EditingMode extends ModalModeAbstract implements ModalModeInterface {
+export default abstract class BrickEditingModeAbstract extends ModalModeAbstract implements ModalModeInterface {
 
     private readonly editingBrick: HTMLElement;
 
@@ -13,11 +13,11 @@ export default class EditingMode extends ModalModeAbstract implements ModalModeI
         this.editingBrick = editingBrick
     }
 
-    save(data: HeadingDataInterface): void {
+    save(data: DataInterface): void {
         $(this.editingBrick).replaceWith(this.createBrick(data))
     }
 
-    getModalLoadData(): HeadingDataInterface {
+    getModalLoadData(): DataInterface {
 
         let editableBrick = new EditableBrick(this.editingBrick, {
             editableBrickClass: this.editor.editableBrickClass,

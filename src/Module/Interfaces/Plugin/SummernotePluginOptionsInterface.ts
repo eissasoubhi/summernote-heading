@@ -1,8 +1,8 @@
-import HeadingModalOptionsInterface from "../HeadingModalOptionsInterface";
+import ModalOptionsInterface from "../Modal/ModalOptionsInterface";
 
 export default interface SummernotePluginOptionsInterface {
 
-    modal?: HeadingModalOptionsInterface
+    modal?: ModalOptionsInterface
 
     buttonLabel?: string,
 

@@ -1,10 +1,10 @@
-import HeadingDataInterface from "../HeadingDataInterface";
+import DataInterface from "../DataInterface";
 
 export default interface ModalInterface {
 
-    open(data: HeadingDataInterface): void
+    open(data: DataInterface): void
 
     close(): void
 
-    getData(): HeadingDataInterface
+    getData(): DataInterface
 }

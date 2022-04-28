@@ -1,9 +1,9 @@
-import HeadingDataInterface from "../HeadingDataInterface";
-import HeadingModalOptionsInterface from "../HeadingModalOptionsInterface";
+import DataInterface from "../DataInterface";
+import ModalOptionsInterface from "./ModalOptionsInterface";
 
 export default interface ModalModeInterface {
 
-    save(data: HeadingDataInterface): void
+    save(data: DataInterface): void
 
-    getModalLoadData(modalOptions: HeadingModalOptionsInterface): HeadingDataInterface
+    getModalLoadData(modalOptions: ModalOptionsInterface): DataInterface
 }

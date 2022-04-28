@@ -1,15 +1,16 @@
-import Editor from "./Editor";
-import EditingMode from "./ModalModes/EditingMode";
+import Editor from "./Editor"
 import HeadingModal from './HeadingModal'
-import CreatingMode from "./ModalModes/CreatingMode";
+import EditableBrick from "./EditableBrick"
+import HeadingCreatingMode from "./ModalModes/HeadingCreatingMode"
+import ModalModeInterface from "./Interfaces/Modal/ModalModeInterface"
 import SummernoteBrickInterface from './Interfaces/SummernoteBrickInterface'
+import BrickEditingModeAbstract from "./ModalModes/BrickEditingModeAbstract"
 import SummernotePluginInterface from './Interfaces/Plugin/SummernotePluginInterface'
-import ModalModeInterface from "./Interfaces/Modal/ModalModeInterface";
-import SummernotePluginOptionsInterface from './Interfaces/Plugin/SummernotePluginOptionsInterface'
-import EditableBrick from "./EditableBrick";
+import HeadingPluginOptionsInterface from "./Interfaces/HeadingPluginOptionsInterface";
+import HeadingEditingMode from "./ModalModes/HeadingEditingMode";
 
 export default class SummernoteHeading implements SummernoteBrickInterface, SummernotePluginInterface {
-    private pluginOptions: SummernotePluginOptionsInterface;
+    private pluginOptions: HeadingPluginOptionsInterface;
     private readonly pluginName: string;
     public editor: Editor;
 
@@ -27,7 +28,7 @@ export default class SummernoteHeading implements SummernoteBrickInterface, Summ
 
     attachEditorEvents() {
         this.editor.on('brick-editing', (brick: HTMLElement) => {
-            this.openModal(new EditingMode(brick, this.editor) )
+            this.openModal(new HeadingEditingMode(brick, this.editor) )
         })
 
         this.editor.on('brick-removed', (brick: HTMLElement) => {
@@ -57,7 +58,7 @@ export default class SummernoteHeading implements SummernoteBrickInterface, Summ
             contents: this.pluginOptions.buttonLabel,
             tooltip: this.pluginOptions.tooltip,
             click: () => {
-                this.openModal(new CreatingMode(this.editor) )
+                this.openModal(new HeadingCreatingMode(this.editor) )
             }
         });
 

@@ -1,13 +1,12 @@
 import Utils from "../Utils";
-import RenderBrickStyle from '../styles/brickStyle'
 import ModalModeAbstract from "./ModalModeAbstract";
-import HeadingDataInterface from "../Interfaces/HeadingDataInterface";
+import DataInterface from "../Interfaces/DataInterface";
 import ModalModeInterface from '../Interfaces/Modal/ModalModeInterface'
 import HeadingModalOptionsInterface from "../Interfaces/HeadingModalOptionsInterface";
 
-export default class CreatingMode extends ModalModeAbstract implements ModalModeInterface {
+export default abstract class BrickCreatingModeAbstract extends ModalModeAbstract implements ModalModeInterface {
 
-    save(data: HeadingDataInterface): void {
+    save(data: DataInterface): void {
         if (!this.editor.hasStyle(this.editor.styleIdentifier)) {
             this.editor.insertHtml(this.createStyle(data))
         }
@@ -16,21 +15,8 @@ export default class CreatingMode extends ModalModeAbstract implements ModalMode
         this.editor.insertHtml(this.createBlankLine(data))
     }
 
-    getModalLoadData(modalOptions: HeadingModalOptionsInterface): HeadingDataInterface {
-        return {
-            brickIdentifier: `brick_${Date.now()}`,
-            title: '',
-            subtitle: '',
-            underlineColor: modalOptions.defaultUnderlineColor
-        }
-    }
-
-    createStyle(data: HeadingDataInterface): string {
-        let style = Utils.JSXElementToHTMLElement( RenderBrickStyle({
-            styleIdentifier: this.editor.styleIdentifier,
-            snbBrickClass: this.editor.editableBrickClass,
-            underlineColor: data.underlineColor
-        }) )
+    createStyle(data: DataInterface): string {
+        let style = Utils.JSXElementToHTMLElement( this.getBrickStyleTemplate(data) )
 
         style =  $(style).wrap('<span contenteditable="false"></span>').parent()[0]
 
@@ -40,7 +26,11 @@ export default class CreatingMode extends ModalModeAbstract implements ModalMode
         return style.outerHTML.replace(/(&quot;)|(&#x27;)/g, '"')
     }
 
-    createBlankLine(data: HeadingDataInterface): string {
+    createBlankLine(data: DataInterface): string {
         return `<p class="${this.editor.blankLineClass} ${data.brickIdentifier}" ><br></p>`
     }
+
+    abstract getModalLoadData(modalOptions: HeadingModalOptionsInterface): DataInterface
+
+    abstract getBrickStyleTemplate(data: DataInterface): JSX.Element
 }

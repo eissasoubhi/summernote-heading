@@ -86,6 +86,13 @@ export default class Editor implements EventsAwareInterface{
     }
 
     removeBlankLine(blankLineIdentifier: string):void {
-        $(this.editable).find(`p.${this.blankLineClass}.${blankLineIdentifier}`).remove()
+        const $line = $(this.editable).find(`p.${this.blankLineClass}.${blankLineIdentifier}`)
+
+        if ($line.text() == '') {
+            $line.remove()
+        } else {
+            // reset the non-empty line to simple paragraph tag
+            $line.removeClass(`${this.blankLineClass} ${blankLineIdentifier}`)
+        }
     }
 }

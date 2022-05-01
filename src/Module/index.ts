@@ -1,12 +1,13 @@
 import SummernoteHeading from './SummernoteHeading'
+import SnbExtensionInterface from "./Interfaces/SnbExtensionInterface";
 
-export default class GalleryPlugin {
+export default class SummernotePlugin{
     private summernoteHeading: SummernoteHeading;
     private readonly name: string;
     
-    constructor(name: string) {
+    constructor(name: string, extensions: SnbExtensionInterface[]) {
         this.name = name
-        this.summernoteHeading = new SummernoteHeading(this.name);
+        this.summernoteHeading = new SummernoteHeading(this.name, extensions);
     }
 
     getPlugin(): object {

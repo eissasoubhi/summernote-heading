@@ -4,26 +4,38 @@ import EditableBrick from "./EditableBrick"
 import HeadingCreatingMode from "./ModalModes/HeadingCreatingMode"
 import ModalModeInterface from "./Interfaces/Modal/ModalModeInterface"
 import SummernoteBrickInterface from './Interfaces/SummernoteBrickInterface'
-import BrickEditingModeAbstract from "./ModalModes/BrickEditingModeAbstract"
 import SummernotePluginInterface from './Interfaces/Plugin/SummernotePluginInterface'
 import HeadingPluginOptionsInterface from "./Interfaces/HeadingPluginOptionsInterface";
 import HeadingEditingMode from "./ModalModes/HeadingEditingMode";
+import ExtensionsManager from "./ExtensionsManager";
+import ExtensibleBrickInterface from "./Interfaces/ExtensibleBrickInterface";
+import SnbExtensionInterface from "./Interfaces/SnbExtensionInterface";
 
-export default class SummernoteHeading implements SummernoteBrickInterface, SummernotePluginInterface {
+export default class SummernoteHeading implements SummernoteBrickInterface, SummernotePluginInterface, ExtensibleBrickInterface {
     private pluginOptions: HeadingPluginOptionsInterface;
     private readonly pluginName: string;
     public editor: Editor;
+    private extensionsManager: ExtensionsManager;
+    private extensions: SnbExtensionInterface[];
 
-    constructor(pluginName: string) {
+    constructor(pluginName: string, extensions: SnbExtensionInterface[]) {
         this.pluginName = pluginName
+
+        this.extensionsManager = new ExtensionsManager()
+
+        this.extensions = extensions
     }
 
     init(context: any): void {
-        this.pluginOptions = context.options[this.pluginName] || {}
+        this.pluginOptions = $.extend( this.defaultOptions(), context.options[this.pluginName])
 
         this.editor = new Editor(context)
 
         this.attachEditorEvents();
+
+        this.addOptionsExtensions()
+
+        this.extensionsManager.triggerEvent('onInit', [this.editor])
     }
 
     attachEditorEvents() {
@@ -40,6 +52,27 @@ export default class SummernoteHeading implements SummernoteBrickInterface, Summ
 
             this.editor.removeBlankLine(blankLineIdentifier)
         })
+    }
+
+    addOptionsExtensions(): void {
+        const optionsExtensions: string[] = this.pluginOptions.extensions || [
+            ''
+        ]
+        const indexedExtensions: { [key: string]: SnbExtensionInterface } = {}
+
+        for (let i = 0; i < this.extensions.length; i++) {
+            indexedExtensions[this.extensions[i].name] = this.extensions[i]
+        }
+
+        for (let i = 0; i < optionsExtensions.length; i++) {
+            const optionsExtension = optionsExtensions[i]
+
+            if (typeof indexedExtensions[optionsExtension] !== 'undefined') {
+                this.use(indexedExtensions[optionsExtension])
+            } else {
+                console.error(`"${optionsExtension}" is an invalid extension name`)
+            }
+        }
     }
 
     openModal(mode: ModalModeInterface) {
@@ -65,4 +98,22 @@ export default class SummernoteHeading implements SummernoteBrickInterface, Summ
         // create jQuery object from button instance.
         return button.render();
     }
-}
+
+    use(extension: SnbExtensionInterface): void {
+        this.extensionsManager.add(extension)
+    }
+
+    defaultOptions(): HeadingPluginOptionsInterface {
+        return {
+            modal: null,
+
+            buttonLabel: '<i class="fa fa-header"></i> SN Heading',
+
+            tooltip: 'Summernote Heading',
+
+            extensions: [
+                'whiteSpaceManager'
+            ]
+        }
+    }
+ }

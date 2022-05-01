@@ -6,7 +6,7 @@ export default class Editor implements EventsAwareInterface{
     readonly editableBrickClass: string;
     readonly styleIdentifier: string
     readonly blankLineClass: string
-    private readonly editable: JQueryStatic;
+    public readonly editable: JQueryStatic;
     private eventManager: EventManager;
     private snEditor: JQueryStatic;
 
@@ -30,7 +30,7 @@ export default class Editor implements EventsAwareInterface{
         this.context.invoke('editor.pasteHTML', html);
     }
 
-    attachEvents() {
+    private attachEvents() {
         let _this = this;
 
         $(this.editable).on('click', `.${this.editableBrickClass} .snb-brick-actions .snb-remove `, function() {

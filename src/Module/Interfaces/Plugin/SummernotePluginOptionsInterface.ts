@@ -4,7 +4,9 @@ export default interface SummernotePluginOptionsInterface {
 
     modal?: ModalOptionsInterface
 
-    buttonLabel?: string,
+    buttonLabel?: string
 
     tooltip?: string
+
+    extensions?: string[]
 }

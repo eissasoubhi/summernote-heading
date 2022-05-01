@@ -1,15 +1,16 @@
-import ModalAbstract from "./ModalAbstract";
+import ModalAbstract from "snb-components/src/ModalAbstract";
 import RenderModalTemplate from './templates/modalTemplate'
-import ModalInterface from './Interfaces/Modal/ModalInterface'
-import EventsAwareInterface from './Interfaces/EventsAwareInterface'
+import ModalInterface from 'snb-components/src/Interfaces/Modal/ModalInterface'
+import EventsAwareInterface from 'snb-components/src/Interfaces/EventsAwareInterface'
 import HeadingDataInterface from "./Interfaces/HeadingDataInterface";
-import ModalModeInterface from './Interfaces/Modal/ModalModeInterface'
+import ModalModeInterface from 'snb-components/src/Interfaces/Modal/ModalModeInterface'
 import HeadingModalOptionsInterface from './Interfaces/HeadingModalOptionsInterface'
+import MessageFactoriesProvider from "snb-components/src/MessageFactoriesProvider";
 
 export default class HeadingModal extends ModalAbstract implements ModalInterface, EventsAwareInterface{
 
 
-    constructor(mode: ModalModeInterface, options: HeadingModalOptionsInterface) {
+    constructor(mode: ModalModeInterface, messagesFactoriesProvider: MessageFactoriesProvider, options: HeadingModalOptionsInterface) {
         const defaultOptions: HeadingModalOptionsInterface = {
             // modal title
             title: 'summernote heading title',
@@ -44,7 +45,7 @@ export default class HeadingModal extends ModalAbstract implements ModalInterfac
 
         const headingModalOptions: HeadingModalOptionsInterface = $.extend(defaultOptions, options);
 
-        super(mode, headingModalOptions)
+        super(mode, messagesFactoriesProvider, headingModalOptions)
     }
 
     getSaveButton(): JQuery {

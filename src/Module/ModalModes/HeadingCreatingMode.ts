@@ -1,8 +1,8 @@
 import BrickStyleRenderer from '../styles/brickStyle'
 import BrickTemplateRenderer from "../templates/brickTemplate";
-import BrickCreatingModeAbstract from "./BrickCreatingModeAbstract";
 import HeadingDataInterface from "../Interfaces/HeadingDataInterface";
 import HeadingModalOptionsInterface from "../Interfaces/HeadingModalOptionsInterface";
+import BrickCreatingModeAbstract from "snb-components/src/ModalModes/BrickCreatingModeAbstract";
 
 export default class HeadingCreatingMode extends BrickCreatingModeAbstract {
 

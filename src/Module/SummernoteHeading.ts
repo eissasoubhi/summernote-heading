@@ -1,15 +1,16 @@
-import Editor from "./Editor"
+import Editor from "snb-components/src/Editor"
 import HeadingModal from './HeadingModal'
-import EditableBrick from "./EditableBrick"
+import EditableBrick from "snb-components/src/EditableBrick"
 import HeadingCreatingMode from "./ModalModes/HeadingCreatingMode"
-import ModalModeInterface from "./Interfaces/Modal/ModalModeInterface"
-import SummernoteBrickInterface from './Interfaces/SummernoteBrickInterface'
-import SummernotePluginInterface from './Interfaces/Plugin/SummernotePluginInterface'
+import ModalModeInterface from "snb-components/src/Interfaces/Modal/ModalModeInterface"
+import SummernoteBrickInterface from 'snb-components/src/Interfaces//SummernoteBrickInterface'
+import SummernotePluginInterface from 'snb-components/src/Interfaces//Plugin/SummernotePluginInterface'
 import HeadingPluginOptionsInterface from "./Interfaces/HeadingPluginOptionsInterface";
 import HeadingEditingMode from "./ModalModes/HeadingEditingMode";
-import ExtensionsManager from "./ExtensionsManager";
-import ExtensibleBrickInterface from "./Interfaces/ExtensibleBrickInterface";
-import SnbExtensionInterface from "./Interfaces/SnbExtensionInterface";
+import ExtensionsManager from "snb-components/src/ExtensionsManager";
+import ExtensibleBrickInterface from "snb-components/src/Interfaces/ExtensibleBrickInterface";
+import SnbExtensionInterface from "snb-components/src/Interfaces/SnbExtensionInterface";
+import HeadingMessageFactoriesProvider from "./Messages/HeadingMessageFactoriesProvider";
 
 export default class SummernoteHeading implements SummernoteBrickInterface, SummernotePluginInterface, ExtensibleBrickInterface {
     private pluginOptions: HeadingPluginOptionsInterface;
@@ -76,7 +77,7 @@ export default class SummernoteHeading implements SummernoteBrickInterface, Summ
     }
 
     openModal(mode: ModalModeInterface) {
-        let modal = new HeadingModal(mode, this.pluginOptions.modal)
+        let modal = new HeadingModal(mode, new HeadingMessageFactoriesProvider(), this.pluginOptions.modal)
 
         modal.on('beforeSave',  () => {
             this.editor.recoverEditorFocus();

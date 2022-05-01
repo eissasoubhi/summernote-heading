@@ -34,6 +34,7 @@
   "author": "Eissa Soubhi <eissa.soubhi@gmail.com> (http://eissa-soubhi.com/)",
   "license": "MIT",
   "dependencies": {
-    "@types/summernote": "^0.8.7"
+    "@types/summernote": "^0.8.7",
+    "snb-components": "^1.0.0"
   }
 }

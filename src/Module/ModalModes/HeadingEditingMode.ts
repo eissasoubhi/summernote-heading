@@ -1,6 +1,6 @@
 import BrickTemplateRenderer from "../templates/brickTemplate";
-import BrickEditingModeAbstract from "./BrickEditingModeAbstract";
 import HeadingDataInterface from "../Interfaces/HeadingDataInterface";
+import BrickEditingModeAbstract from "snb-components/src/ModalModes/BrickEditingModeAbstract";
 
 export default class HeadingEditingMode extends BrickEditingModeAbstract {
 

@@ -1,5 +1,5 @@
 import SummernoteHeading from './SummernoteHeading'
-import SnbExtensionInterface from "./Interfaces/SnbExtensionInterface";
+import SnbExtensionInterface from "snb-components/src/Interfaces/SnbExtensionInterface";
 
 export default class SummernotePlugin{
     private summernoteHeading: SummernoteHeading;

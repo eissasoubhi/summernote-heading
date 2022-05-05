@@ -1,4 +1,5 @@
-import DataInterface from "snb-components/src/Interfaces/DataInterface";
+import DataInterface from "snb-components/src/Module/Interfaces/DataInterface";
+
 
 export default interface HeadingDataInterface extends DataInterface{
     title: string,

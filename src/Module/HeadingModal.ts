@@ -1,9 +1,9 @@
-import ModalAbstract from "snb-components/src/ModalAbstract";
+import ModalAbstract from "snb-components/src/Module/ModalAbstract";
 import RenderModalTemplate from './templates/modalTemplate'
-import ModalInterface from 'snb-components/src/Interfaces/Modal/ModalInterface'
-import EventsAwareInterface from 'snb-components/src/Interfaces/EventsAwareInterface'
+import ModalInterface from 'snb-components/src/Module/Interfaces/Modal/ModalInterface'
+import EventsAwareInterface from 'snb-components/src/Module/Interfaces/EventsAwareInterface'
 import HeadingDataInterface from "./Interfaces/HeadingDataInterface";
-import ModalModeInterface from 'snb-components/src/Interfaces/Modal/ModalModeInterface'
+import ModalModeInterface from 'snb-components/src/Module/Interfaces/Modal/ModalModeInterface'
 import HeadingModalOptionsInterface from './Interfaces/HeadingModalOptionsInterface'
 import MessageFactoriesProvider from "snb-components/src/MessageFactoriesProvider";
 

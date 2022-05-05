@@ -1,6 +1,6 @@
 // for JSX rendering
 import * as React from "react";
-import BrickStyleOptionsInterface from "snb-components/src/Interfaces/BrickStyleOptionsInterface";
+import BrickStyleOptionsInterface from "snb-components/src/Module/Interfaces/BrickStyleOptionsInterface";
 
 export default (options: BrickStyleOptionsInterface) => {
 

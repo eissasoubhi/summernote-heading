@@ -1,4 +1,4 @@
-import ModalOptionsInterface from "snb-components/src/Interfaces/Modal/ModalOptionsInterface";
+import ModalOptionsInterface from "snb-components/src/Module/Interfaces/Modal/ModalOptionsInterface";
 
 export default interface HeadingModalOptionsInterface extends ModalOptionsInterface {
     titleLabel: string

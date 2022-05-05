@@ -11,26 +11,30 @@ import ExtensionsManager from "snb-components/src/ExtensionsManager";
 import ExtensibleBrickInterface from "snb-components/src/Module/Interfaces/ExtensibleBrickInterface";
 import SnbExtensionInterface from "snb-components/src/Module/Interfaces/SnbExtensionInterface";
 import HeadingMessageFactoriesProvider from "./Messages/HeadingMessageFactoriesProvider";
+import LineBreakManager from "snb-components/src/LineBreak/LineBreakManager";
 
 export default class SummernoteHeading implements SummernoteBrickInterface, SummernotePluginInterface, ExtensibleBrickInterface {
     private pluginOptions: HeadingPluginOptionsInterface;
     private readonly pluginName: string;
     public editor: Editor;
     private extensionsManager: ExtensionsManager;
-    private extensions: SnbExtensionInterface[];
+    private readonly extensions: SnbExtensionInterface[];
+    private linebreakManager: LineBreakManager;
 
     constructor(pluginName: string, extensions: SnbExtensionInterface[]) {
         this.pluginName = pluginName
 
-        this.extensionsManager = new ExtensionsManager()
-
         this.extensions = extensions
+
+        this.extensionsManager = new ExtensionsManager()
     }
 
     init(context: any): void {
         this.pluginOptions = $.extend( this.defaultOptions(), context.options[this.pluginName])
 
         this.editor = new Editor(context)
+
+        this.linebreakManager = new LineBreakManager(this.editor)
 
         this.attachEditorEvents();
 
@@ -51,7 +55,7 @@ export default class SummernoteHeading implements SummernoteBrickInterface, Summ
 
             const blankLineIdentifier = editableBrick.getBrickData().brickIdentifier
 
-            this.editor.removeBlankLine(blankLineIdentifier)
+            this.linebreakManager.removeBlankLinebreak(blankLineIdentifier)
         })
     }
 
@@ -113,7 +117,7 @@ export default class SummernoteHeading implements SummernoteBrickInterface, Summ
             tooltip: 'Summernote Heading',
 
             extensions: [
-                'whiteSpaceManager'
+                'snbWhiteSpaceManager'
             ]
         }
     }

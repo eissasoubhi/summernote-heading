@@ -3,15 +3,16 @@
 # Summernote heading
 summernote-heading extension/plugin/module for [summernote](https://github.com/summernote/summernote/) WYSIWYG, provides a bootstrap modal to add custom heading to the summernote editor.
 
-Font-awesome: 4.7
-JQuery: 3
-Bootstrap version: 4
-Summernote version: 0.8
-
-**For a complete module with more user-friendly components. see [Summernote bricks](https://github.com/eissasoubhi/summernote-bricks)**
+### Dependencies:
+Font-awesome: 4.7<br>
+JQuery: 3<br>
+Bootstrap version: 4<br>
+Summernote version: 0.8<br>
 
 ### More summernote extensions (SNB bricks)
  - [Summernote Gallery](https://github.com/eissasoubhi/summernote-gallery)
+
+**For a complete module with more user-friendly components. see [Summernote bricks](https://github.com/eissasoubhi/summernote-bricks)**
 
 # Demo
 

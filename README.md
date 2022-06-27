@@ -200,7 +200,7 @@ flowchart LR
 ### SNB Extensions:
 SNB Extensions are a way to extract some reusable features to be included later (or not) by any Summernote-brick
 
-See the available SNB extensions [here](https://github.com/eissasoubhi/SNB-components#readme)
+See the available SNB extensions [here](https://github.com/eissasoubhi/SNB-components#extensions)
 
 ### Contribution
 If you found any bugs or have suggestions, don't hesitate to throw it in the issues sections.

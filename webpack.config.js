@@ -7,12 +7,15 @@ module.exports = {
     mode: 'production',
 
     // entry files
-    entry: './src/index.ts',
+    entry: {
+        'plugin': './src/index.ts',
+        'module': './src/Module/index.ts'
+    },
 
     // output bundles (location)
     output: {
         path: path.resolve( __dirname, 'dist' ),
-        filename: 'summernote-heading.min.js',
+        filename: 'summernote-heading.[name].min.js',
     },
 
     // file resolutions

@@ -8,14 +8,14 @@ module.exports = {
 
     // entry files
     entry: {
-        'plugin': './src/index.ts',
-        'module': './src/Module/index.ts'
+        'summernote-heading.min': './src/index.ts',
+        'module/index': './src/Module/index.ts'
     },
 
     // output bundles (location)
     output: {
         path: path.resolve( __dirname, 'dist' ),
-        filename: 'summernote-heading.[name].min.js',
+        filename: '[name].js',
     },
 
     // file resolutions

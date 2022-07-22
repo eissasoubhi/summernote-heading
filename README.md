@@ -3,15 +3,16 @@
 # Summernote heading
 summernote-heading extension/plugin/module for [summernote](https://github.com/summernote/summernote/) WYSIWYG, provides a bootstrap modal to add custom heading to the summernote editor.
 
-Font-awesome: 4.7
-JQuery: 3
-Bootstrap version: 4
-Summernote version: 0.8
-
-**For a complete module with more user-friendly components. see [Summernote bricks](https://github.com/eissasoubhi/summernote-bricks)**
+### Dependencies:
+Font-awesome: 4.7<br>
+JQuery: 3<br>
+Bootstrap version: 4<br>
+Summernote version: 0.8<br>
 
 ### More summernote extensions (SNB bricks)
  - [Summernote Gallery](https://github.com/eissasoubhi/summernote-gallery)
+
+**For a complete module with more user-friendly components. see [Summernote bricks](https://github.com/eissasoubhi/summernote-bricks)**
 
 # Demo
 
@@ -143,12 +144,63 @@ JSX is for writing single-file template files residing in `src/Module/templates`
 Some components of this code source are imported from the SNB-components package
 ### How it works:
 
-![How it works](https://raw.githubusercontent.com/eissasoubhi/SNB-components/main/how-it-works.jpeg?raw=true "How it works")
+```mermaid
+flowchart LR
+    subgraph Modal
+        direction TB
+
+        user_interaction(User interaction)
+        save(Save)
+        show_modal ==> user_interaction
+        user_interaction ==> |Parse user inputs|save
+        
+    end
+
+    subgraph Extension/plugin
+        direction LR
+        show_modal(Show modal)
+        create_brick(Create Brick)
+        mode_type{Mode?}
+        creating_mode(Creating Mode)
+        editing_mode(Editing Mode)
+        create_modal ==> show_modal
+        save ==> create_brick
+        save -. Modal data .-> create_brick
+        create_brick ==> mode_type
+        mode_type ==> creating_mode
+        mode_type ==> editing_mode
+    end
+
+    subgraph Editor
+        direction LR
+        seprator[_]
+        
+        style seprator stroke:#000,stroke-width:0px,color:#000,stroke-dasharray: 0
+        subgraph Toolbar
+            direction TB
+            create_modal(Create modal)
+            add_brick(Add Brick)
+            add_brick ==> |Creating mode| create_modal
+            add_brick -. Empty data .-> create_modal
+        end
+        subgraph Brick
+            direction TB
+            edit(Edit)
+            brick_content[(Brick ontent)]
+            edit ==> |Editing mode| create_modal
+            edit -. Brick data .-> create_modal
+            style Brick fill:#dc2269,stroke:#000,stroke-width:2px,color:#000,stroke-dasharray: 5 5
+            
+        end   
+        creating_mode ==> |Insert Brick|Brick
+        editing_mode ==> |Replace Brick|Brick
+    end
+```
 
 ### SNB Extensions:
 SNB Extensions are a way to extract some reusable features to be included later (or not) by any Summernote-brick
 
-See the available SNB extensions [here](https://github.com/eissasoubhi/SNB-components#readme)
+See the available SNB extensions [here](https://github.com/eissasoubhi/SNB-components#extensions)
 
 ### Contribution
 If you found any bugs or have suggestions, don't hesitate to throw it in the issues sections.

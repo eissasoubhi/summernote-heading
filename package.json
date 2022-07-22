@@ -5,36 +5,40 @@
   "main": "",
   "keywords": [
     "summernote heading",
+    "summernote custom heading",
     "summernote title",
+    "summernote custom title",
     "summernote h1",
+    "summernote custom h1",
     "summernote h2",
+    "summernote custom h2",
     "summernote module",
-    "summernote plugin"
+    "summernote plugin",
+    "summernote brick",
+    "summernote block"
   ],
-  "homepage": "",
-  "bugs": "",
-  "repository": "",
+  "homepage": "http://eissasoubhi.github.io/summernote-heading/",
+  "bugs": "https://github.com/eissasoubhi/summernote-heading/issues",
+  "repository": "https://github.com/eissasoubhi/summernote-heading",
   "devDependencies": {
     "@types/jquery": "^3.5.14",
     "@types/react": "^18.0.5",
     "@types/react-dom": "^18.0.2",
+    "@types/summernote": "^0.8.7",
     "http-serve": "^1.0.1",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "ts-loader": "^9.2.8",
     "typescript": "^4.6.3",
     "webpack": "^5.72.0",
-    "webpack-cli": "^4.9.2"
+    "webpack-cli": "^4.9.2",
+    "snb-components": "^1.0.0"
   },
   "scripts": {
-    "start": "node node_modules/http-serve/bin/http-serve -a 127.0.0.1 -p 9091",
+    "start": "node node_modules/http-serve/bin/http-serve -a 127.0.0.1 -p 9093",
     "build": "webpack --mode=production",
     "dev": "webpack --mode development --watch"
   },
   "author": "Eissa Soubhi <eissa.soubhi@gmail.com> (http://eissa-soubhi.com/)",
-  "license": "MIT",
-  "dependencies": {
-    "@types/summernote": "^0.8.7",
-    "snb-components": "^1.0.0"
-  }
+  "license": "MIT"
 }

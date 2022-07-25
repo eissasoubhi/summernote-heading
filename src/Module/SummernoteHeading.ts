@@ -116,9 +116,7 @@ export default class SummernoteHeading implements SummernoteBrickInterface, Summ
 
             tooltip: 'Summernote Heading',
 
-            extensions: [
-                'snbWhiteSpaceManager'
-            ]
+            extensions: []
         }
     }
  }

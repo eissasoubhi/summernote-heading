@@ -1,22 +1,10 @@
 
 const path = require( 'path' );
 
-module.exports = {
+const config = {
 
     // bundling mode
-    mode: 'production',
-
-    // entry files
-    entry: {
-        'summernote-heading.min': './src/index.ts',
-        'module/index': './src/Module/index.ts'
-    },
-
-    // output bundles (location)
-    output: {
-        path: path.resolve( __dirname, 'dist' ),
-        filename: '[name].js',
-    },
+    mode: 'development',
 
     // file resolutions
     resolve: {
@@ -42,3 +30,30 @@ module.exports = {
         ]
     }
 };
+
+const brickConfig = { ...config, ...{
+    name: "snb-brick",
+    entry: "./src/index.ts",
+    output: {
+        path: path.resolve( __dirname, 'dist' ),
+        filename: 'summernote-heading.min.js',
+    },
+}};
+
+const moduleConfig = { ...config, ...{
+    name: "snb-module",
+    entry: "./src/Module/index.ts",
+    output: {
+        library: {
+          name: 'module',
+          type: 'umd',
+        },
+        path: path.resolve( __dirname, 'dist' ),
+        filename: 'module/index.js',
+    },
+}};
+
+// Return Array of Configurations
+module.exports = [
+    brickConfig, moduleConfig,
+];

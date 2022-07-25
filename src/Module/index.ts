@@ -1,11 +1,11 @@
 import SummernoteHeading from './SummernoteHeading'
 import SnbExtensionInterface from "snb-components/src/Module/Interfaces/SnbExtensionInterface";
 
-export default class SummernotePlugin{
+export default class SummernotePlugin {
     private summernoteHeading: SummernoteHeading;
     private readonly name: string;
     
-    constructor(name: string, extensions: SnbExtensionInterface[]) {
+    constructor(name: string, extensions: SnbExtensionInterface[] = []) {
         this.name = name
         this.summernoteHeading = new SummernoteHeading(this.name, extensions);
     }

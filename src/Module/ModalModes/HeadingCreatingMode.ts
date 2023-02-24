@@ -15,7 +15,7 @@ export default class HeadingCreatingMode extends BrickCreatingModeAbstract {
         }
     }
 
-    getBrickStyleTemplate(data: HeadingDataInterface): JSX.Element {
+    getBrickStyleTemplate(data: HeadingDataInterface): JSX.Element|void {
         return BrickStyleRenderer({
             styleIdentifier: this.editor.styleIdentifier,
             snbBrickClass: this.editor.editableBrickClass,

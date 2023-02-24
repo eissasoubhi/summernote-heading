@@ -7,7 +7,7 @@ import ModalModeInterface from 'snb-components/src/Module/Interfaces/Modal/Modal
 import HeadingModalOptionsInterface from './Interfaces/HeadingModalOptionsInterface'
 import MessageFactoriesProvider from "snb-components/src/MessageFactoriesProvider";
 
-export default class HeadingModal extends ModalAbstract implements ModalInterface, EventsAwareInterface{
+export default class HeadingModal extends ModalAbtract implements ModalInterface, EventsAwareInterface{
 
 
     constructor(mode: ModalModeInterface, messagesFactoriesProvider: MessageFactoriesProvider, options: HeadingModalOptionsInterface) {

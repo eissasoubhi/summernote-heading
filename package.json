@@ -1,23 +1,29 @@
 {
   "name": "summernote-heading",
   "version": "1.0.2",
-  "description": "summernote heading module, adds a customized heading component to summernote.",
-  "main": "",
+  "description": "Summernote plugin for creating and editing reusable custom heading blocks.",
+  "main": "dist/module/index.js",
+  "browser": "dist/summernote-heading.min.js",
+  "files": [
+    "dist",
+    "summernote-bricks.css",
+    "README.md",
+    "LICENSE"
+  ],
   "keywords": [
     "summernote heading",
     "summernote custom heading",
     "summernote title",
     "summernote custom title",
     "summernote h1",
-    "summernote custom h1",
     "summernote h2",
-    "summernote custom h2",
     "summernote module",
     "summernote plugin",
     "summernote brick",
-    "summernote block"
+    "summernote block",
+    "wysiwyg"
   ],
-  "homepage": "http://eissasoubhi.github.io/summernote-heading/",
+  "homepage": "https://eissasoubhi.github.io/summernote-heading/",
   "bugs": "https://github.com/eissasoubhi/summernote-heading/issues",
   "repository": "https://github.com/eissasoubhi/summernote-heading",
   "devDependencies": {
@@ -37,7 +43,10 @@
   "scripts": {
     "start": "node node_modules/http-serve/bin/http-serve -a 127.0.0.1 -p 9093",
     "build": "webpack --mode=production",
-    "dev": "webpack --mode development --watch"
+    "dev": "webpack --mode development --watch",
+    "typecheck": "tsc --noEmit",
+    "test": "node --test test/*.test.cjs",
+    "check": "npm run typecheck && npm run build && npm test"
   },
   "author": "Eissa Soubhi <eissa.soubhi@gmail.com> (http://eissa-soubhi.com/)",
   "license": "MIT"

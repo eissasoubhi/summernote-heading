@@ -7,6 +7,11 @@ export interface HeadingData {
     anchor?: string;
 }
 
+interface LegacyHeadingData {
+    title?: unknown;
+    subtitle?: unknown;
+}
+
 export const HEADING_BRICK_TYPE = 'heading';
 export const HEADING_BRICK_VERSION = 3;
 
@@ -93,4 +98,51 @@ export function parseHeading(element: Element): HeadingData | null {
     } catch (_error) {
         return null;
     }
+}
+
+/**
+ * Read the persisted markup produced by the pre-v3 Heading plugin.
+ *
+ * This is deliberately separate from parseHeading(): loading an editor must not
+ * silently rewrite stored content. Hosts can opt into migration explicitly and
+ * decide when the transformed HTML is persisted.
+ */
+export function parseLegacyHeading(element: Element): HeadingData | null {
+    const rawData = element.getAttribute('data-brickdata');
+    const heading = element.querySelector('h1.snb-heading-title');
+
+    if (!rawData || !heading) {
+        return null;
+    }
+
+    try {
+        const legacy = JSON.parse(rawData) as LegacyHeadingData;
+        const subtitleElement = heading.querySelector('span');
+        const titleFromMarkup = Array.from(heading.childNodes)
+            .filter((node) => node.nodeType === Node.TEXT_NODE)
+            .map((node) => node.textContent || '')
+            .join(' ')
+            .trim();
+        const title = typeof legacy.title === 'string' ? legacy.title : titleFromMarkup;
+        const subtitle = typeof legacy.subtitle === 'string'
+            ? legacy.subtitle
+            : subtitleElement?.textContent || undefined;
+
+        return normalizeHeadingData({
+            level: 1,
+            title,
+            subtitle,
+        });
+    } catch (_error) {
+        return null;
+    }
+}
+
+/**
+ * Convert one legacy Heading element to clean v3 markup without mutating the
+ * source element. Persisting/replacing the returned node is the host's choice.
+ */
+export function migrateLegacyHeading(element: Element): HTMLElement | null {
+    const data = parseLegacyHeading(element);
+    return data ? renderHeading(data) : null;
 }

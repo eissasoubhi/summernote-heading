@@ -53,7 +53,19 @@ const moduleConfig = { ...config, ...{
     },
 }};
 
+// Greenfield v3 proof-of-concept. This is intentionally built in parallel
+// with the current artifact until browser compatibility and migration tests
+// are complete.
+const v3Config = { ...config, ...{
+    name: "snb-heading-v3",
+    entry: "./src/v3/index.ts",
+    output: {
+        path: path.resolve( __dirname, 'dist/v3' ),
+        filename: 'summernote-heading.js',
+    },
+}};
+
 // Return Array of Configurations
 module.exports = [
-    brickConfig, moduleConfig,
+    brickConfig, moduleConfig, v3Config,
 ];

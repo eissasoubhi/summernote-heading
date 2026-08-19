@@ -1,211 +1,156 @@
+# Summernote Heading
 
+Summernote Heading is a standalone [Summernote](https://github.com/summernote/summernote) plugin for creating and editing reusable heading blocks with a modal form.
 
-# Summernote heading
-summernote-heading extension/plugin/module for [summernote](https://github.com/summernote/summernote/) WYSIWYG, provides a bootstrap modal to add custom heading to the summernote editor.
+It is also one of the official plugins that can be composed by [Summernote Bricks](https://github.com/eissasoubhi/summernote-bricks), but **Summernote Bricks is not required** to use Heading.
 
-### Dependencies:
-Font-awesome: 4.7<br>
-JQuery: 3<br>
-Bootstrap version: 4<br>
-Summernote version: 0.8<br>
+## Features
 
-### More summernote extensions (SNB bricks)
- - [Summernote Gallery](https://github.com/eissasoubhi/summernote-gallery)
+- create structured heading blocks from a modal;
+- edit an inserted heading through the shared SNB brick lifecycle;
+- configurable title/subtitle and underline color;
+- validation rules for modal data;
+- optional reusable SNB extensions such as whitespace management;
+- standalone Summernote toolbar integration.
 
-**For a complete module with more user-friendly components. see [Summernote bricks](https://github.com/eissasoubhi/summernote-bricks)**
+## Demo
 
-# Demo
+The historical demo is available at:
 
-Demo link:
-http://eissasoubhi.github.io/summernote-heading <br><br>
+https://eissasoubhi.github.io/summernote-heading
 
-![Summernote heading demo](demo.gif?raw=true "Summernote heading demo")
+![Summernote Heading demo](demo.gif?raw=true "Summernote Heading demo")
 
-# Installing
-- Include the required files, and the module file after summernote-bs4.min.js file
+## Install
+
+```bash
+npm install summernote-heading
+```
+
+The package exposes two intended consumption paths:
+
+- module entry: `dist/module/index.js`;
+- browser bundle: `dist/summernote-heading.min.js`.
+
+### Browser usage
+
+The current demo integration uses Bootstrap 4:
 
 ```html
-<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" >
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
-<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css">
+<link rel="stylesheet" href="node_modules/summernote-heading/summernote-bricks.css">
 
-<!-- summernote-heading style-->
-<link rel="stylesheet" href="summernote-bricks.css">
-
-<div style="background-color: #FFF">
-    <div id="summernote"></div>
-</div>
+<div id="summernote"></div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.6.1/js/bootstrap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
-
-<!-- summernote-heading -->
-<script src="dist/summernote-heading.min.js" type="text/javascript"></script>
+<script src="node_modules/summernote-heading/dist/summernote-heading.min.js"></script>
 ```
-- Add the heading to the summernote editor toolbar
 
-```javascript
+Add `summernoteHeading` to the toolbar:
+
+```js
 $('#summernote').summernote({
-        toolbar: [
-            // ['insert', ['picture', 'link', 'video', 'table', 'hr', 'summernoteHeading']],
-            // ['font style', ['fontname', 'fontsize', 'color', 'bold', 'italic', 
-            //'underline', 'strikethrough', 'superscript', 'subscript', 'clear']],
-            // ['paragraph style', ['style', 'ol', 'ul', 'paragraph', 'height']],
-            // ['misc', ['fullscreen', 'codeview', 'undo', 'redo', 'help']]
-            ['extensions', ['summernoteHeading']],
-        ],
-        summernoteHeading: {
-            modal: {
-                // modal title
-                title: 'Summernote Heading title',
-
-                // close button text
-                closeText: 'Close',
-
-                // save button text
-                saveText: 'Save',
-
-                // title input label text
-                titleLabel: 'Heading title',
-
-                // title input label text
-                subtitleLabel: 'Heading subtitle',
-
-                // the html element class containing the modal messages
-                messageContainerClass: 'snb-modal-message',
-
-                // the default value of the underline color input
-                defaultUnderlineColor: '#c50000',
-
-                // the text of the label of the underline color input
-                underlineColorLabel: 'Underline color',
-
-                // modal inputs validations
-                validations: {
-                    "title": ["required"],
-                    "subtitle": ["required"]
-                },
-            },
-
-            buttonLabel: '<i class="fa fa-header"></i> SNB Heading',
-
-            tooltip: 'Summernote Heading',
-
-            extensions: [
-                // add/remove linebreaks extension
-                'snbWhiteSpaceManager'
-            ]
-        }
-    });
+  toolbar: [
+    ['extensions', ['summernoteHeading']]
+  ],
+  summernoteHeading: {
+    buttonLabel: '<i class="fa fa-header"></i> Heading',
+    tooltip: 'Add heading',
+    extensions: ['snbWhiteSpaceManager'],
+    modal: {
+      title: 'Create heading',
+      closeText: 'Close',
+      saveText: 'Save',
+      titleLabel: 'Heading title',
+      subtitleLabel: 'Heading subtitle',
+      defaultUnderlineColor: '#c50000',
+      underlineColorLabel: 'Underline color',
+      validations: {
+        title: ['required'],
+        subtitle: ['required']
+      }
+    }
+  }
+});
 ```
 
-# Options
+## Main options
 
-The module has general options and modal options.<br>
-The `modal` option has sub-options that deal with the bootstrap modal.<br>
+| Option | Purpose | Default |
+| --- | --- | --- |
+| `buttonLabel` | Toolbar button HTML/text | Heading label |
+| `tooltip` | Toolbar tooltip | `Summernote Heading` |
+| `extensions` | Reusable SNB extensions enabled for the brick | `['snbWhiteSpaceManager']` |
+| `modal.title` | Modal title | `summernote heading title` |
+| `modal.closeText` | Close button label | `Close` |
+| `modal.saveText` | Save button label | `Save` |
+| `modal.titleLabel` | Title input label | `Heading title` |
+| `modal.subtitleLabel` | Subtitle input label | `Heading subtitle` |
+| `modal.defaultUnderlineColor` | Initial underline color | `#c50000` |
+| `modal.underlineColorLabel` | Underline color input label | `Underline color` |
+| `modal.validations` | Validation rules for heading data | required title/subtitle |
 
-| Option                      | Description                                                                            | Default                                 | Type                                                            |
-|-----------------------------|----------------------------------------------------------------------------------------|-----------------------------------------|-----------------------------------------------------------------|
-| buttonLabel                 | the plugin button label displayed on the summernote toolbar                            | <i class="fa fa-header"></i> SN Heading | string                                                          |
-| tooltip                     | the plugin button tooltip visible on the button hover event                            | Summernote Heading                      | string                                                          |
-| extensions                  | extension to add extra features to the brick (see the SNB-extension section)           | ['snbWhiteSpaceManager']                | array                                                           |
-| **modal**                   | The modal options                                                                      | -                                       | object: `src/Module/Interfaces/HeadingModalOptionsInterface.ts` |
-| modal.title                 | The modal title                                                                        | summernote heading title                | string                                                          |
-| modal.closeText             | the modal close button text                                                            | Close                                   | string                                                          |
-| modal.saveText              | the modal save button text                                                             | Save                                    | string                                                          |
-| modal.titleLabel            | the label text of the heading title input                                              | Heading title                           | string                                                          |
-| modal.subtitleLabel         | the label text of the heading subtitle input                                           | Heading subtitle                        | string                                                          |
-| modal.messageContainerClass | the class of the html element containing the modal messages                            | snb-modal-message                       | string                                                          |
-| modal.defaultUnderlineColor | the default color of the heading underline in hexa format                              | #c50000                                 | string                                                          |
-| modal.underlineColorLabel   | the label text of the underline color input                                            | Underline color                         | string                                                          |
-| **modal.validations**       | Validation of the modal/brick data: `src/Module/Interfaces/HeadingDataInterface.ts`    | -                                       | object                                                          |
-| modal.validations.title     | the validation rules of the `src/Module/Interfaces/HeadingDataInterface.ts` title      | ["required"]                            | array                                                           |
-| modal.validations.subtitle  | the validation rules of the  `src/Module/Interfaces/HeadingDataInterface.ts`  subtitle | ["required"]                            | array                                                           |
+The TypeScript interfaces under `src/Module/Interfaces` are the canonical reference while the public documentation is being modernized.
 
-# Deep dive || Edit
-
-**Requirements: node v16**
-
-### Dev environment setup
-To run the plugin on local, head to the project root folder and run:
-1. `npm install`
-2. `npm run start` to start the project on 127.0.0.1:9091
-3. `npm run dev` to start the webpack watch mode
-4. Edit plugin files in the `/src` folder 
-5. `npm run build` to generate the build in `/dist` folder
-
-### The source code
-The module is coded with Typescript and JSX
-
-JSX is for writing single-file template files residing in `src/Module/templates`
-
-Some components of this code source are imported from the SNB-components package
-### How it works:
+## How it works
 
 ```mermaid
 flowchart LR
-    subgraph Modal
-        direction TB
-
-        user_interaction(User interaction)
-        save(Save)
-        show_modal ==> user_interaction
-        user_interaction ==> |Parse user inputs|save
-        
-    end
-
-    subgraph Extension/plugin
-        direction LR
-        show_modal(Show modal)
-        create_brick(Create Brick)
-        mode_type{Mode?}
-        creating_mode(Creating Mode)
-        editing_mode(Editing Mode)
-        create_modal ==> show_modal
-        save ==> create_brick
-        save -. Modal data .-> create_brick
-        create_brick ==> mode_type
-        mode_type ==> creating_mode
-        mode_type ==> editing_mode
-    end
-
-    subgraph Editor
-        direction LR
-        seprator[_]
-        
-        style seprator stroke:#000,stroke-width:0px,color:#000,stroke-dasharray: 0
-        subgraph Toolbar
-            direction TB
-            create_modal(Create modal)
-            add_brick(Add Brick)
-            add_brick ==> |Creating mode| create_modal
-            add_brick -. Empty data .-> create_modal
-        end
-        subgraph Brick
-            direction TB
-            edit(Edit)
-            brick_content[(Brick ontent)]
-            edit ==> |Editing mode| create_modal
-            edit -. Brick data .-> create_modal
-            style Brick fill:#dc2269,stroke:#000,stroke-width:2px,color:#000,stroke-dasharray: 5 5
-            
-        end   
-        creating_mode ==> |Insert Brick|Brick
-        editing_mode ==> |Replace Brick|Brick
-    end
+    Toolbar[Summernote toolbar] --> Modal[Heading modal]
+    Modal --> Data[Validate heading data]
+    Data --> Mode{Mode}
+    Mode -->|create| Insert[Insert heading brick]
+    Mode -->|edit| Replace[Replace existing heading brick]
+    Insert --> Editor[Summernote editor]
+    Replace --> Editor
 ```
 
-### SNB Extensions:
-SNB Extensions are a way to extract some reusable features to be included later (or not) by any Summernote-brick
+The plugin is intentionally split between Heading-specific behavior and reusable SNB runtime behavior. Shared modal, validation, editor and extension concepts belong in `snb-components` rather than being duplicated here.
 
-See the available SNB extensions [here](https://github.com/eissasoubhi/SNB-components#extensions)
+## Compatibility
 
-### Contribution
-If you found any bugs or have suggestions, don't hesitate to throw it in the issues sections.
+The existing browser demo is based on Summernote 0.8.18 + Bootstrap 4. That is the **known historical integration**, not a full current compatibility matrix.
 
-For more understanding of how this module works take a look on the [v1](https://github.com/eissasoubhi/summernote-gallery/tree/v1) branch or the summernote extension basic sample [hello](https://github.com/summernote/summernote/blob/v0.7.0/examples/plugin-hello.html) .
+The ecosystem modernization work is adding explicit browser coverage. Bootstrap 5 requires a shared modal adapter because the current SNB runtime still calls Bootstrap's jQuery modal API.
 
-# License
-The contents of this repository is licensed under [The MIT License.](https://opensource.org/licenses/MIT)
+See [summernote-bricks#3](https://github.com/eissasoubhi/summernote-bricks/issues/3) for the cross-package roadmap.
+
+## Development
+
+Use an active Node LTS release. CI currently validates Node 22 and 24.
+
+```bash
+npm ci
+npm run typecheck
+npm run build
+npm test
+npm pack --dry-run
+```
+
+Run the demo locally:
+
+```bash
+npm run start
+```
+
+Watch TypeScript changes:
+
+```bash
+npm run dev
+```
+
+See [`CONTRIBUTING.md`](CONTRIBUTING.md) for contribution rules and [`SECURITY.md`](SECURITY.md) for vulnerability reporting.
+
+## Designing future heading features
+
+Keep persisted HTML stable when possible. If the brick data or generated markup must change, provide a migration strategy before release because applications may already store editor HTML containing Heading bricks.
+
+New reusable behavior should become an SNB extension/shared runtime capability rather than a Heading-only copy.
+
+## License
+
+MIT — see [`LICENSE`](LICENSE).

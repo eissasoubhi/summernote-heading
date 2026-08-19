@@ -14,6 +14,10 @@
     }
   },
   "files": ["dist"],
+  "peerDependencies": {
+    "jquery": ">=3.6.0 <4",
+    "summernote": ">=0.9.1 <0.10"
+  },
   "scripts": {
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "test": "vitest run --config vitest.config.ts",

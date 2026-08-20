@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import {
   migrateLegacyHeading,
+  normalizeHeadingData,
   parseHeading,
   parseLegacyHeading,
   renderHeading,
@@ -26,6 +27,22 @@ describe('Heading v3 content contract', () => {
     });
   });
 
+  it('omits optional fields that normalize to empty text', () => {
+    const normalized = normalizeHeadingData({
+      level: 3,
+      title: '  Clean heading  ',
+      subtitle: '   ',
+      anchor: '',
+    });
+
+    expect(normalized).toEqual({
+      level: 3,
+      title: 'Clean heading',
+    });
+    expect(normalized).not.toHaveProperty('subtitle');
+    expect(normalized).not.toHaveProperty('anchor');
+  });
+
   it('migrates legacy persisted markup only when explicitly requested', () => {
     const legacy = document.createElement('div');
     legacy.setAttribute('data-brickdata', JSON.stringify({
@@ -35,12 +52,13 @@ describe('Heading v3 content contract', () => {
     }));
     legacy.innerHTML = '<h1 class="snb-heading-title">Legacy title<span>Legacy subtitle</span></h1><style>.old { color: red; }</style>';
 
-    expect(parseLegacyHeading(legacy)).toEqual({
+    const parsed = parseLegacyHeading(legacy);
+    expect(parsed).toEqual({
       level: 1,
       title: 'Legacy title',
       subtitle: 'Legacy subtitle',
-      anchor: undefined,
     });
+    expect(parsed).not.toHaveProperty('anchor');
 
     const migrated = migrateLegacyHeading(legacy);
     expect(migrated).not.toBeNull();

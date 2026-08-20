@@ -1,56 +1,57 @@
 # Summernote Heading
 
-Summernote Heading is a standalone [Summernote](https://github.com/summernote/summernote) plugin for creating and editing reusable heading blocks with a modal form.
+Summernote Heading is a standalone Summernote 0.9.x plugin for creating and editing semantic heading blocks. It can be composed by Summernote Bricks, but **Summernote Bricks is not required**.
 
-It is also one of the official plugins that can be composed by [Summernote Bricks](https://github.com/eissasoubhi/summernote-bricks), but **Summernote Bricks is not required** to use Heading.
+## v3 source status
+
+The public `main` branch contains the **3.0.0-rc.0 source/package contract**. The v3 implementation is native to Summernote's plugin lifecycle and no longer depends on the historical shared SNB runtime described by older documentation.
+
+The maintained ecosystem compatibility matrix validates Heading with Summernote 0.9.1 across BS3, BS4, BS5 and Lite builds under Chromium, Firefox and WebKit.
+
+Package publication is separate from source readiness. Verify the registry version you intend to consume instead of assuming the v3 RC has been published.
 
 ## Features
 
-- create structured heading blocks from a modal;
-- edit an inserted heading through the shared SNB brick lifecycle;
-- configurable title/subtitle and underline color;
-- validation rules for modal data;
-- optional reusable SNB extensions such as whitespace management;
-- standalone Summernote toolbar integration.
+- standalone `summernoteHeading` toolbar plugin;
+- semantic H1-H6 content with optional subtitle and anchor;
+- create and edit through a Summernote-native dialog;
+- double-click editing of existing v3 heading blocks;
+- undo-aware edits through Summernote commands;
+- accessible labels, focus handling and error feedback;
+- clean persisted HTML marked with `data-snb-brick="heading"` and `data-snb-version="3"`;
+- explicit, opt-in helpers for migrating legacy Heading markup;
+- ESM, CommonJS/browser bundle and TypeScript declarations.
 
-## Demo
+## Package contract
 
-The historical demo is available at:
+The v3 root manifest exposes:
 
-https://eissasoubhi.github.io/summernote-heading
-
-![Summernote Heading demo](demo.gif?raw=true "Summernote Heading demo")
-
-## Install
-
-```bash
-npm install summernote-heading
+```text
+dist/index.js          ESM
+dist/index.umd.cjs     CommonJS / browser bundle
+dist/types/index.d.ts  TypeScript declarations
 ```
 
-The package exposes two intended consumption paths:
+Host peer dependencies:
 
-- module entry: `dist/module/index.js`;
-- browser bundle: `dist/summernote-heading.min.js`.
+```json
+{
+  "jquery": ">=3.6.0 <4",
+  "summernote": ">=0.9.1 <0.10"
+}
+```
 
-### Browser usage
+## Browser usage
 
-The current demo integration uses Bootstrap 4:
+Load jQuery, the Summernote build matching your Bootstrap/Lite setup, then the Heading bundle before initializing the editor:
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css">
-<link rel="stylesheet" href="node_modules/summernote-heading/summernote-bricks.css">
-
-<div id="summernote"></div>
-
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.6.1/js/bootstrap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
-<script src="node_modules/summernote-heading/dist/summernote-heading.min.js"></script>
+<script src="path/to/jquery.js"></script>
+<script src="path/to/summernote.js"></script>
+<script src="path/to/summernote-heading/dist/index.umd.cjs"></script>
 ```
 
-Add `summernoteHeading` to the toolbar:
+Then add `summernoteHeading` to the toolbar:
 
 ```js
 $('#summernote').summernote({
@@ -58,99 +59,81 @@ $('#summernote').summernote({
     ['extensions', ['summernoteHeading']]
   ],
   summernoteHeading: {
-    buttonLabel: '<i class="fa fa-header"></i> Heading',
-    tooltip: 'Add heading',
-    extensions: ['snbWhiteSpaceManager'],
-    modal: {
-      title: 'Create heading',
-      closeText: 'Close',
-      saveText: 'Save',
-      titleLabel: 'Heading title',
-      subtitleLabel: 'Heading subtitle',
-      defaultUnderlineColor: '#c50000',
-      underlineColorLabel: 'Underline color',
-      validations: {
-        title: ['required'],
-        subtitle: ['required']
-      }
-    }
+    buttonLabel: 'Heading',
+    tooltip: 'Insert heading',
+    defaultLevel: 2,
+    dialogTitle: 'Heading',
+    saveText: 'Save',
+    titleLabel: 'Title',
+    subtitleLabel: 'Subtitle',
+    levelLabel: 'Level',
+    anchorLabel: 'Anchor'
   }
 });
 ```
 
-## Main options
+## Persisted content
 
-| Option | Purpose | Default |
-| --- | --- | --- |
-| `buttonLabel` | Toolbar button HTML/text | Heading label |
-| `tooltip` | Toolbar tooltip | `Summernote Heading` |
-| `extensions` | Reusable SNB extensions enabled for the brick | `['snbWhiteSpaceManager']` |
-| `modal.title` | Modal title | `summernote heading title` |
-| `modal.closeText` | Close button label | `Close` |
-| `modal.saveText` | Save button label | `Save` |
-| `modal.titleLabel` | Title input label | `Heading title` |
-| `modal.subtitleLabel` | Subtitle input label | `Heading subtitle` |
-| `modal.defaultUnderlineColor` | Initial underline color | `#c50000` |
-| `modal.underlineColorLabel` | Underline color input label | `Underline color` |
-| `modal.validations` | Validation rules for heading data | required title/subtitle |
+Heading v3 stores semantic HTML instead of opaque runtime JSON or editor controls. A generated block has this shape:
 
-The TypeScript interfaces under `src/Module/Interfaces` are the canonical reference while the public documentation is being modernized.
-
-## How it works
-
-```mermaid
-flowchart LR
-    Toolbar[Summernote toolbar] --> Modal[Heading modal]
-    Modal --> Data[Validate heading data]
-    Data --> Mode{Mode}
-    Mode -->|create| Insert[Insert heading brick]
-    Mode -->|edit| Replace[Replace existing heading brick]
-    Insert --> Editor[Summernote editor]
-    Replace --> Editor
+```html
+<div class="snb-brick snb-heading" data-snb-brick="heading" data-snb-version="3" contenteditable="false">
+  <h2 class="snb-heading__title" id="example-anchor">Example heading</h2>
+  <p class="snb-heading__subtitle">Optional subtitle</p>
+</div>
 ```
 
-The plugin is intentionally split between Heading-specific behavior and reusable SNB runtime behavior. Shared modal, validation, editor and extension concepts belong in `snb-components` rather than being duplicated here.
+The public content helpers include `renderHeading`, `parseHeading`, `parseLegacyHeading` and `migrateLegacyHeading`. Legacy conversion is intentionally separate from normal parsing so loading an editor does not silently rewrite stored content.
 
-## Compatibility
+## Module usage
 
-The existing browser demo is based on Summernote 0.8.18 + Bootstrap 4. That is the **known historical integration**, not a full current compatibility matrix.
+The module entry exports `SummernoteHeadingV3` plus the heading data/content helpers:
 
-The ecosystem modernization work is adding explicit browser coverage. Bootstrap 5 requires a shared modal adapter because the current SNB runtime still calls Bootstrap's jQuery modal API.
+```js
+import {
+  SummernoteHeadingV3,
+  renderHeading,
+  parseHeading,
+  migrateLegacyHeading
+} from 'summernote-heading';
+```
 
-See [summernote-bricks#3](https://github.com/eissasoubhi/summernote-bricks/issues/3) for the cross-package roadmap.
+The browser bundle self-registers `summernoteHeading` when loaded after Summernote.
 
 ## Development
 
-Use an active Node LTS release. CI currently validates Node 22 and 24.
-
 ```bash
 npm ci
-npm run typecheck
-npm run build
-npm test
-npm pack --dry-run
+npm run check
 ```
 
-Run the demo locally:
+`npm run check` performs strict TypeScript checking, Vitest tests, Vite/TypeScript builds and package-shape validation. The cross-repository Bricks compatibility harness additionally tests the packed Heading artifact against the supported Summernote/browser matrix.
 
-```bash
-npm run start
-```
+## Compatibility
 
-Watch TypeScript changes:
+The maintained reference is Summernote **0.9.1** with:
 
-```bash
-npm run dev
-```
+- Bootstrap 3 build;
+- Bootstrap 4 build;
+- Bootstrap 5 build;
+- Summernote Lite;
+- Chromium, Firefox and WebKit.
 
-See [`CONTRIBUTING.md`](CONTRIBUTING.md) for contribution rules and [`SECURITY.md`](SECURITY.md) for vulnerability reporting.
+The historical 0.8.18 demo and old bundle paths are legacy references, not the v3 contract.
 
-## Designing future heading features
+## Ecosystem
 
-Keep persisted HTML stable when possible. If the brick data or generated markup must change, provide a migration strategy before release because applications may already store editor HTML containing Heading bricks.
+- `summernote-heading` — this standalone semantic Heading plugin;
+- `summernote-gallery` — standalone backend-agnostic Gallery plugin;
+- `summernote-bricks` — optional composer of registered plugin buttons and central browser compatibility harness;
+- `SNB-components` — independent optional shared core; Heading does not currently depend on it.
 
-New reusable behavior should become an SNB extension/shared runtime capability rather than a Heading-only copy.
+See the Summernote Bricks roadmap issue #3 for ecosystem release-readiness status.
+
+## Contributing, security and release
+
+See `CONTRIBUTING.md`, `SECURITY.md` and `RELEASING.md`.
 
 ## License
 
-MIT — see [`LICENSE`](LICENSE).
+MIT — see `LICENSE`.

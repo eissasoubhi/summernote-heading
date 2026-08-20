@@ -35,11 +35,14 @@ export function normalizeHeadingData(data: HeadingData): HeadingData {
         throw new TypeError('Heading level must be between 1 and 6.');
     }
 
+    const subtitle = normalizeOptionalText(data.subtitle);
+    const anchor = normalizeOptionalText(data.anchor);
+
     return {
         level: data.level,
         title: normalizeRequiredText(data.title, 'Heading title'),
-        subtitle: normalizeOptionalText(data.subtitle),
-        anchor: normalizeOptionalText(data.anchor),
+        ...(subtitle ? { subtitle } : {}),
+        ...(anchor ? { anchor } : {}),
     };
 }
 
@@ -92,8 +95,8 @@ export function parseHeading(element: Element): HeadingData | null {
         return normalizeHeadingData({
             level,
             title,
-            subtitle,
-            anchor,
+            ...(subtitle ? { subtitle } : {}),
+            ...(anchor ? { anchor } : {}),
         });
     } catch (_error) {
         return null;
@@ -131,7 +134,7 @@ export function parseLegacyHeading(element: Element): HeadingData | null {
         return normalizeHeadingData({
             level: 1,
             title,
-            subtitle,
+            ...(subtitle ? { subtitle } : {}),
         });
     } catch (_error) {
         return null;

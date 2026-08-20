@@ -35,12 +35,13 @@ describe('Heading v3 content contract', () => {
     }));
     legacy.innerHTML = '<h1 class="snb-heading-title">Legacy title<span>Legacy subtitle</span></h1><style>.old { color: red; }</style>';
 
-    expect(parseLegacyHeading(legacy)).toEqual({
+    const parsed = parseLegacyHeading(legacy);
+    expect(parsed).toEqual({
       level: 1,
       title: 'Legacy title',
       subtitle: 'Legacy subtitle',
-      anchor: undefined,
     });
+    expect(parsed).not.toHaveProperty('anchor');
 
     const migrated = migrateLegacyHeading(legacy);
     expect(migrated).not.toBeNull();

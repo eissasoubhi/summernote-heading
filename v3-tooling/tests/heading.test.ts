@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import {
   migrateLegacyHeading,
+  normalizeHeadingData,
   parseHeading,
   parseLegacyHeading,
   renderHeading,
@@ -24,6 +25,22 @@ describe('Heading v3 content contract', () => {
       subtitle: 'Summernote native',
       anchor: 'architecture',
     });
+  });
+
+  it('omits optional fields that normalize to empty text', () => {
+    const normalized = normalizeHeadingData({
+      level: 3,
+      title: '  Clean heading  ',
+      subtitle: '   ',
+      anchor: '',
+    });
+
+    expect(normalized).toEqual({
+      level: 3,
+      title: 'Clean heading',
+    });
+    expect(normalized).not.toHaveProperty('subtitle');
+    expect(normalized).not.toHaveProperty('anchor');
   });
 
   it('migrates legacy persisted markup only when explicitly requested', () => {

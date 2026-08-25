@@ -4,7 +4,7 @@ import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 
-const repoDir = resolve(import.meta.dirname, '../..');
+const repoDir = resolve(import.meta.dirname, '..');
 const output = execFileSync('npm', ['pack', '--dry-run', '--json', '--ignore-scripts'], {
   cwd: repoDir,
   encoding: 'utf8',
@@ -18,12 +18,15 @@ const required = [
   'dist/types/index.d.ts',
 ];
 const missing = required.filter((path) => !files.has(path));
-if (missing.length) throw new Error(`Root Heading package is missing: ${missing.join(', ')}`);
-const forbidden = [...files].filter((path) => path.startsWith('src/') || path.startsWith('v3-tooling/') || path.startsWith('test/'));
-if (forbidden.length) throw new Error(`Root Heading package leaks internal files: ${forbidden.join(', ')}`);
+if (missing.length) throw new Error(`Heading package is missing: ${missing.join(', ')}`);
+const forbidden = [...files].filter((path) => path.startsWith('src/') || path.startsWith('test/') || path.startsWith('scripts/') || path.startsWith('v3-tooling/'));
+if (forbidden.length) throw new Error(`Heading package leaks internal files: ${forbidden.join(', ')}`);
 
 const manifest = JSON.parse(readFileSync(resolve(repoDir, 'package.json'), 'utf8'));
-if (manifest.version !== '3.0.0-rc.0') throw new Error(`Unexpected root version: ${manifest.version}`);
+if (manifest.name !== 'summernote-heading') throw new Error(`Unexpected package name: ${manifest.name}`);
+if (typeof manifest.version !== 'string' || !/^3\.0\.0(?:-rc\.\d+)?$/.test(manifest.version)) {
+  throw new Error(`Unexpected Heading version: ${manifest.version}`);
+}
 
 const installSummernoteStub = () => {
   const summernote = { plugins: {} };
@@ -32,13 +35,13 @@ const installSummernoteStub = () => {
 };
 
 const esmSummernote = installSummernoteStub();
-const esm = await import(pathToFileURL(resolve(repoDir, 'dist/index.js')).href);
-if (esmSummernote.plugins.summernoteHeading !== esm.SummernoteHeadingV3) throw new Error('Root ESM entrypoint did not register Heading.');
+const esm = await import(`${pathToFileURL(resolve(repoDir, 'dist/index.js')).href}?package-check=${Date.now()}`);
+if (esmSummernote.plugins.summernoteHeading !== esm.SummernoteHeadingV3) throw new Error('ESM entrypoint did not register Heading.');
 
 const cjsSummernote = installSummernoteStub();
 const require = createRequire(import.meta.url);
 const cjs = require(resolve(repoDir, 'dist/index.umd.cjs'));
-if (cjsSummernote.plugins.summernoteHeading !== cjs.SummernoteHeadingV3) throw new Error('Root CommonJS entrypoint did not register Heading.');
+if (cjsSummernote.plugins.summernoteHeading !== cjs.SummernoteHeadingV3) throw new Error('CommonJS entrypoint did not register Heading.');
 
 delete globalThis.$;
-console.log(`Validated promoted root Heading package (${files.size} files).`);
+console.log(`Validated Heading package ${manifest.version} (${files.size} files).`);

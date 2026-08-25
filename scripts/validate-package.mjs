@@ -15,6 +15,7 @@ const required = [
   'package.json', 'README.md', 'LICENSE',
   'dist/index.js', 'dist/index.js.map',
   'dist/index.umd.cjs', 'dist/index.umd.cjs.map',
+  'dist/summernote-heading.browser.js', 'dist/summernote-heading.browser.js.map',
   'dist/types/index.d.ts',
 ];
 const missing = required.filter((path) => !files.has(path));
@@ -42,6 +43,11 @@ const cjsSummernote = installSummernoteStub();
 const require = createRequire(import.meta.url);
 const cjs = require(resolve(repoDir, 'dist/index.umd.cjs'));
 if (cjsSummernote.plugins.summernoteHeading !== cjs.SummernoteHeadingV3) throw new Error('CommonJS entrypoint did not register Heading.');
+
+const browserAlias = readFileSync(resolve(repoDir, 'dist/summernote-heading.browser.js'), 'utf8');
+if (!browserAlias.includes('sourceMappingURL=summernote-heading.browser.js.map')) {
+  throw new Error('Browser-friendly Heading bundle has an invalid source map reference.');
+}
 
 delete globalThis.$;
 console.log(`Validated Heading package ${manifest.version} (${files.size} files).`);

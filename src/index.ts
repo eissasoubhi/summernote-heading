@@ -1,7 +1,14 @@
-import SummernotePlugin from './Module'
-import extensions from './Extensions'
+import SummernoteHeadingV3 from './plugin';
 
-let summernotePlugin = new SummernotePlugin('summernoteHeading', extensions);
+const summernote = ($ as any).summernote;
 
-// add the plugin to summernote
-$.extend(($ as any).summernote.plugins, summernotePlugin.getPlugin());
+if (!summernote || !summernote.plugins) {
+    throw new Error('Summernote must be loaded before summernote-heading.');
+}
+
+$.extend(summernote.plugins, {
+    summernoteHeading: SummernoteHeadingV3,
+});
+
+export { SummernoteHeadingV3 };
+export * from './heading';

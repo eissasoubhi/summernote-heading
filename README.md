@@ -4,7 +4,7 @@ Summernote Heading is a standalone Summernote 0.9.x plugin for creating and edit
 
 ## v3 source status
 
-The public `main` branch contains the **3.0.0-rc.0 source/package contract**. The v3 implementation is native to Summernote's plugin lifecycle and no longer depends on the historical shared SNB runtime described by older documentation.
+The public `main` branch contains the **3.0.0-rc.1 source/package contract**. The v3 implementation is native to Summernote's plugin lifecycle and no longer depends on the historical shared SNB runtime described by older documentation.
 
 The maintained ecosystem compatibility matrix validates Heading with Summernote 0.9.1 across BS3, BS4, BS5 and Lite builds under Chromium, Firefox and WebKit.
 
@@ -20,35 +20,16 @@ Package publication is separate from source readiness. Verify the registry versi
 - accessible labels, focus handling and error feedback;
 - clean persisted HTML marked with `data-snb-brick="heading"` and `data-snb-version="3"`;
 - explicit, opt-in helpers for migrating legacy Heading markup;
-- ESM, CommonJS/browser bundle and TypeScript declarations.
-
-## Package contract
-
-The v3 root manifest exposes:
-
-```text
-dist/index.js          ESM
-dist/index.umd.cjs     CommonJS / browser bundle
-dist/types/index.d.ts  TypeScript declarations
-```
-
-Host peer dependencies:
-
-```json
-{
-  "jquery": ">=3.6.0 <4",
-  "summernote": ">=0.9.1 <0.10"
-}
-```
+- browser-friendly, ESM, CommonJS and TypeScript package artifacts.
 
 ## Browser usage
 
-Load jQuery, the Summernote build matching your Bootstrap/Lite setup, then the Heading bundle before initializing the editor:
+For a normal script-tag integration, use the browser-friendly file. You do not need to know or use the CommonJS filename:
 
 ```html
 <script src="path/to/jquery.js"></script>
 <script src="path/to/summernote.js"></script>
-<script src="path/to/summernote-heading/dist/index.umd.cjs"></script>
+<script src="path/to/summernote-heading/dist/summernote-heading.browser.js"></script>
 ```
 
 Then add `summernoteHeading` to the toolbar:
@@ -70,6 +51,28 @@ $('#summernote').summernote({
     anchorLabel: 'Anchor'
   }
 });
+```
+
+Heading works completely on its own. Install Summernote Bricks only if you want to group this button with Gallery or other Summernote buttons inside one dropdown.
+
+## Package contract
+
+The package keeps separate artifacts for browsers and build tools:
+
+```text
+dist/summernote-heading.browser.js  simple script-tag browser entrypoint
+dist/index.js                       ESM
+dist/index.umd.cjs                  CommonJS / compatibility bundle
+dist/types/index.d.ts               TypeScript declarations
+```
+
+Host peer dependencies:
+
+```json
+{
+  "jquery": ">=3.6.0 <4",
+  "summernote": ">=0.9.1 <0.10"
+}
 ```
 
 ## Persisted content
@@ -123,10 +126,10 @@ The historical 0.8.18 demo and old bundle paths are legacy references, not the v
 
 ## Ecosystem
 
-- `summernote-heading` — this standalone semantic Heading plugin;
-- `summernote-gallery` — standalone backend-agnostic Gallery plugin;
-- `summernote-bricks` — optional composer of registered plugin buttons and central browser compatibility harness;
-- `SNB-components` — independent optional shared core; Heading does not currently depend on it.
+- [`summernote-heading`](https://github.com/eissasoubhi/summernote-heading) — this standalone semantic Heading plugin;
+- [`summernote-gallery`](https://github.com/eissasoubhi/summernote-gallery) — standalone backend-agnostic Gallery plugin;
+- [`summernote-bricks`](https://github.com/eissasoubhi/summernote-bricks) — optional composer that groups registered plugin buttons;
+- [`SNB-components`](https://github.com/eissasoubhi/SNB-components) — independent optional shared core; Heading does not currently depend on it.
 
 See the Summernote Bricks roadmap issue #3 for ecosystem release-readiness status.
 

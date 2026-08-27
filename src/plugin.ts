@@ -60,6 +60,12 @@ interface SummernoteUi {
     onDialogHidden: ($dialog: JQuery, callback: () => void) => void;
 }
 
+interface JQueryWithSummernote extends JQueryStatic {
+    summernote: {
+        ui: SummernoteUi;
+    };
+}
+
 const defaultOptions: HeadingV3Options = {
     buttonLabel: 'Heading',
     tooltip: 'Insert heading',
@@ -136,7 +142,7 @@ export default function SummernoteHeadingV3(
     this: HeadingPluginInstance,
     context: SummernotePluginContext,
 ): void {
-    const ui = $.summernote.ui as unknown as SummernoteUi;
+    const ui = ($ as JQueryWithSummernote).summernote.ui;
     const pluginOptions = $.extend(
         true,
         {},

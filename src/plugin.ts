@@ -15,6 +15,51 @@ interface HeadingV3Options {
     anchorLabel: string;
 }
 
+interface HeadingPluginInstance {
+    initialize: () => void;
+    destroy: () => void;
+    show: (target?: HTMLElement) => void;
+}
+
+interface SummernotePluginOptions {
+    id?: string;
+    dialogsInBody?: boolean;
+    summernoteHeading?: Partial<HeadingV3Options>;
+}
+
+interface SummernoteLayoutInfo {
+    editable: JQuery;
+    editor: JQuery;
+}
+
+interface SummernotePluginContext {
+    options: SummernotePluginOptions;
+    layoutInfo: SummernoteLayoutInfo;
+    memo: (key: string, factory: () => unknown) => void;
+    invoke: (key: string, ...args: unknown[]) => unknown;
+}
+
+interface SummernoteRenderedUi {
+    render: () => JQuery;
+}
+
+interface SummernoteUi {
+    button: (options: {
+        contents: string;
+        tooltip: string;
+        click: () => void;
+    }) => SummernoteRenderedUi;
+    dialog: (options: {
+        title: string;
+        body: string;
+        footer: string;
+    }) => SummernoteRenderedUi;
+    hideDialog: ($dialog: JQuery) => void;
+    showDialog: ($dialog: JQuery) => void;
+    onDialogShown: ($dialog: JQuery, callback: () => void) => void;
+    onDialogHidden: ($dialog: JQuery, callback: () => void) => void;
+}
+
 const defaultOptions: HeadingV3Options = {
     buttonLabel: 'Heading',
     tooltip: 'Insert heading',
@@ -35,12 +80,12 @@ function escapeAttribute(value: string): string {
         .replace(/>/g, '&gt;');
 }
 
-function fieldId(context: any, suffix: string): string {
-    const editorId = context.options && context.options.id ? String(context.options.id) : 'editor';
+function fieldId(context: SummernotePluginContext, suffix: string): string {
+    const editorId = context.options.id ? String(context.options.id) : 'editor';
     return `snb-heading-${editorId}-${suffix}`;
 }
 
-function renderDialogBody(context: any, options: HeadingV3Options): string {
+function renderDialogBody(context: SummernotePluginContext, options: HeadingV3Options): string {
     const titleId = fieldId(context, 'title');
     const subtitleId = fieldId(context, 'subtitle');
     const levelId = fieldId(context, 'level');
@@ -87,11 +132,19 @@ function writeDialogData($dialog: JQuery, data: HeadingData): void {
     $dialog.find('.snb-heading-form__error').text('');
 }
 
-export default function SummernoteHeadingV3(this: any, context: any): void {
-    const ui = ($ as any).summernote.ui;
-    const pluginOptions = $.extend(true, {}, defaultOptions, context.options[PLUGIN_NAME] || {}) as HeadingV3Options;
-    const $editable = context.layoutInfo.editable as JQuery;
-    const $editor = context.layoutInfo.editor as JQuery;
+export default function SummernoteHeadingV3(
+    this: HeadingPluginInstance,
+    context: SummernotePluginContext,
+): void {
+    const ui = $.summernote.ui as unknown as SummernoteUi;
+    const pluginOptions = $.extend(
+        true,
+        {},
+        defaultOptions,
+        context.options.summernoteHeading || {},
+    ) as HeadingV3Options;
+    const $editable = context.layoutInfo.editable;
+    const $editor = context.layoutInfo.editor;
     let $dialog: JQuery | null = null;
     let editingTarget: HTMLElement | null = null;
 
